@@ -2,6 +2,8 @@ import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { createTriSensorFloor } from "./floor.js";
+import { createSkeletonMP } from "./skeleton.js";
+import { MP_BONES_BODY, EXCLUDED_JOINTS } from "./consts.js"
 
 
 export const scene = new THREE.Scene();
@@ -39,6 +41,9 @@ const floor = createTriSensorFloor({
   patchSize : 0.5,
 })
 scene.add(floor.group)
+
+const skel = createSkeletonMP({ excluded: EXCLUDED_JOINTS, bones: MP_BONES_BODY });
+scene.add(skel.group)
 
 export function animate() {
     requestAnimationFrame(animate);
