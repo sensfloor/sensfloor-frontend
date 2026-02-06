@@ -1,6 +1,7 @@
 import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { createTriSensorFloor } from "./floor.js";
 
 
 export const scene = new THREE.Scene();
@@ -25,8 +26,26 @@ const dir = new THREE.DirectionalLight(0xffffff, 0.65);
 dir.position.set(3, 6, 0);
 scene.add(dir);
 
-// TODO Remove
-const geometry = new THREE.BoxGeometry(1, 1, 1);
-const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
-const cube = new THREE.Mesh(geometry, material);
-scene.add(cube);
+
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+const floor = createTriSensorFloor({
+  cols : 6,
+  rows : 4,
+  patchSize : 0.5,
+})
+scene.add(floor)
+
+export function animate() {
+    requestAnimationFrame(animate);
+    
+    // Required if controls.enableDamping or autoRotate are set to true
+    controls.update();
+
+    // The actual draw call
+    renderer.render(scene, camera);
+}
