@@ -38,7 +38,7 @@ const floor = createTriSensorFloor({
   rows : 4,
   patchSize : 0.5,
 })
-scene.add(floor)
+scene.add(floor.group)
 
 export function animate() {
     requestAnimationFrame(animate);
