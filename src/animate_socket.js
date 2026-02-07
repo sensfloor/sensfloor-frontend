@@ -27,10 +27,15 @@ export function animate_socket() {
   const raw_data = buffer.get();
 
   if (raw_data != null) {
-    const convertedFrame = backendFrameToThree(raw_data, (x, y) =>
-      floor.patchWorld(x, y),
-    );
-    skel.setPose(convertedFrame.poseWorld);
-  }
+      // update skelton
+      const convertedFrame = backendFrameToThree(raw_data.pose_estimate, (x, y) =>
+        floor.patchWorld(x, y),
+      );
+      skel.setPose(convertedFrame.poseWorld);   // convertedFrame.poseWorld = dictionary of joints idx to world coordinates of joints
 
+      // update floor signals
+      const activated_pathch = raw_data.activations;
+      //console.log("activated patch:", activated_pathch.positions);
+      floor.animatePatch(activated_pathch.positions,(x, y) => floor.patchWorld(x, y));
+  }
 }

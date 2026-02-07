@@ -1,12 +1,12 @@
 import * as THREE from "three";
-import { POSE_LANDMARKS } from "../utils/consts";
+import { POSE_LANDMARKS } from "../utils/consts";  // Map from mediapipe name to index, e.g. "LEFT_SHOULDER" -> 11
 
 export function backendFrameToThree(data, patchToWorld) {
   const poseEstimate = data.pose_estimate
   //  position_x, position_y (patch coordinates of hip)
   const hipPatch = { x: poseEstimate.position_x, y: poseEstimate.position_y };
   const T = patchToWorld(hipPatch.x, hipPatch.y); // TODO: refactor this patchToWorl logic
-
+  console.log("hip patch coords:", hipPatch, "converted to world coords:", T);
   const poseWorld = new Map();
 
   // array of joints  {joint: str, x, y, z}
@@ -22,17 +22,17 @@ export function backendFrameToThree(data, patchToWorld) {
   const LIFT = new THREE.Vector3(0, lowestJoint.y, 0);
 
   for (const j of joints) {
-    const idx = POSE_LANDMARKS[j.joint];
+    const idx = POSE_LANDMARKS[j.joint];   // got mediapipe joint index from joint name, e.g. "LEFT_SHOULDER" -> 11
     if (idx === undefined) continue;
     const p = new THREE.Vector3(j.x, -j.y, -j.z);
-    poseWorld.set(idx, p.add(T).add(LIFT));
+    poseWorld.set(idx, p.add(T).add(LIFT)); // dictonary of joints idx to world coordinates of joints
   }
 
   return {
     frame: data.frame ?? null,
     patchXY: hipPatch,
-    poseWorld,
-    floorWorld: T,
+    poseWorld,  // dictionary of joints idx to world coordinates of joints 
+    floorWorld: T, 
     readoutMessages: [],
   };
 }
