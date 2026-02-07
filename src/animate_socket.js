@@ -15,6 +15,7 @@ const skel = createSkeletonMP({
   excluded: EXCLUDED_JOINTS,
   bones: MP_BONES_BODY,
   color: SKELETON_COLORS[0],
+  rotationOffset: 45,
 });
 scene.add(skel.group);
 

@@ -24,6 +24,7 @@ export function setup_csv_animate(config) {
       excluded: EXCLUDED_JOINTS,
       bones: MP_BONES_BODY,
       color: cfg.color,
+      rotationOffset: cfg.rotationOffset
     });
     scene.add(skel.group);
     return skel;
