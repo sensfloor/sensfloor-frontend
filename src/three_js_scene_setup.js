@@ -1,10 +1,6 @@
-import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { createTriSensorFloor } from "./floor.js";
-import { createSkeletonMP } from "./skeleton.js";
-import { MP_BONES_BODY, EXCLUDED_JOINTS } from "./consts.js"
-
 
 export const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x111111);
@@ -28,29 +24,11 @@ const dir = new THREE.DirectionalLight(0xffffff, 0.65);
 dir.position.set(3, 6, 0);
 scene.add(dir);
 
-
 window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-const floor = createTriSensorFloor({
-  cols : 6,
-  rows : 4,
-  patchSize : 0.5,
-})
-scene.add(floor.group)
-
-const skel = createSkeletonMP({ excluded: EXCLUDED_JOINTS, bones: MP_BONES_BODY });
-scene.add(skel.group)
-
-export function animate() {
-    requestAnimationFrame(animate);
-    
-    // Required if controls.enableDamping or autoRotate are set to true
-    controls.update();
-
-    // The actual draw call
-    renderer.render(scene, camera);
-}
+export const floor = createTriSensorFloor({ cols: 6, rows: 4, patchSize: 0.5 });
+scene.add(floor.group);
