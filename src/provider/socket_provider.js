@@ -1,8 +1,8 @@
-import {create_buffer} from "./buffer"
+import { create_buffer } from "../utils/buffer";
 
 const ws = new WebSocket("ws://127.0.0.1:8765");
 
-export const buffer = create_buffer()
+export const buffer = create_buffer();
 
 ws.onopen = () => {
   console.log(" WebSocket connected");
@@ -25,5 +25,5 @@ ws.onmessage = (e) => {
   //   floor.setMarkerByPatch(raw.position_x, raw.position_y, false);
   // }
 
-  buffer.push(raw)
+  buffer.push(raw);
 };

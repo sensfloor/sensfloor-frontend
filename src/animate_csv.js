@@ -1,18 +1,18 @@
-import { createSkeletonMP } from "./skeleton.js";
-import { backendFrameToThree } from "./pose_map_converter.js";
-import { MP_BONES_BODY, EXCLUDED_JOINTS } from "./consts.js";
-import { create_buffer } from "./buffer.js";
-import { streamMultipleCsvsToBuffer } from "./csv_provider.js";
+import { createSkeletonMP } from "./threejs_objects/skeleton.js";
+import { backendFrameToThree } from "./threejs_objects/pose_map_converter.js";
+import { MP_BONES_BODY, EXCLUDED_JOINTS } from "./utils/consts.js";
+import { create_buffer } from "./utils/buffer.js";
+import { streamMultipleCsvsToBuffer } from "./provider/csv_provider.js";
 import {
   scene,
   camera,
   controls,
   renderer,
   floor,
-} from "./three_js_scene_setup.js";
+} from "./threejs_objects/three_js_scene_setup.js";
 
-let buffer = null
-let skeletons = null
+let buffer = null;
+let skeletons = null;
 export function setup_csv_animate(config) {
   buffer = create_buffer();
   const csvPaths = config.map((cfg) => cfg.path);

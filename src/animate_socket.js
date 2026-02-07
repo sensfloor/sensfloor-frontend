@@ -1,15 +1,15 @@
-import { backendFrameToThree } from "./pose_map_converter.js";
+import { backendFrameToThree } from "./threejs_objects/pose_map_converter.js";
 import {
   scene,
   camera,
   controls,
   renderer,
   floor,
-} from "./three_js_scene_setup.js";
-import { MP_BONES_BODY, EXCLUDED_JOINTS } from "./consts.js";
-import { buffer } from "./socket_provider.js";
-import { SKELETON_COLORS } from "./colors.js";
-import { createSkeletonMP } from "./skeleton.js";
+} from "./threejs_objects/three_js_scene_setup.js";
+import { MP_BONES_BODY, EXCLUDED_JOINTS } from "./utils/consts.js";
+import { buffer } from "./provider/socket_provider.js";
+import { SKELETON_COLORS } from "./utils/colors.js";
+import { createSkeletonMP } from "./threejs_objects/skeleton.js";
 
 const skel = createSkeletonMP({
   excluded: EXCLUDED_JOINTS,

@@ -1,6 +1,5 @@
 import * as THREE from "three";
-import { POSE_LANDMARKS } from "./consts";
-
+import { POSE_LANDMARKS } from "../utils/consts";
 
 export function backendFrameToThree(data, patchToWorld) {
   //  position_x, position_y (patch coordinates of hip)
@@ -19,7 +18,7 @@ export function backendFrameToThree(data, patchToWorld) {
   }
 
   // assume the lowest (probably foot) joint is touching the floor
-  const LIFT = new THREE.Vector3(0, lowestJoint.y, 0); 
+  const LIFT = new THREE.Vector3(0, lowestJoint.y, 0);
 
   for (const j of joints) {
     const idx = POSE_LANDMARKS[j.joint];
