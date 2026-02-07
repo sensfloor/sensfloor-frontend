@@ -1,7 +1,6 @@
 import { createSkeletonMP } from "./skeleton.js";
 import { backendFrameToThree } from "./pose_map_converter.js";
 import { MP_BONES_BODY, EXCLUDED_JOINTS } from "./consts.js";
-import { SKELETON_COLORS } from "./colors.js";
 import { create_buffer } from "./buffer.js";
 import { streamMultipleCsvsToBuffer } from "./csv_provider.js";
 import {
@@ -12,29 +11,24 @@ import {
   floor,
 } from "./three_js_scene_setup.js";
 
-const CSV_SKELETON_CONFIGS = [
-  { path: "../video_poses.csv", color: SKELETON_COLORS[5] },
-  //{ path: "../predicted_poses_model_71.csv", color: SKELETON_COLORS[2] },
-  {
-    path: "../landmark_weighted_feet_predictions.csv",
-    color: SKELETON_COLORS[0],
-  },
-];
+let buffer = null
+let skeletons = null
+export function setup_csv_animate(config) {
+  buffer = create_buffer();
+  const csvPaths = config.map((cfg) => cfg.path);
+  streamMultipleCsvsToBuffer(csvPaths, 15, buffer);
 
-const buffer = create_buffer();
-const csvPaths = CSV_SKELETON_CONFIGS.map((cfg) => cfg.path);
-streamMultipleCsvsToBuffer(csvPaths, 15, buffer);
-
-// Create skeletons dynamically based on config
-const skeletons = CSV_SKELETON_CONFIGS.map((cfg) => {
-  const skel = createSkeletonMP({
-    excluded: EXCLUDED_JOINTS,
-    bones: MP_BONES_BODY,
-    color: cfg.color,
+  // Create skeletons dynamically based on config
+  skeletons = config.map((cfg) => {
+    const skel = createSkeletonMP({
+      excluded: EXCLUDED_JOINTS,
+      bones: MP_BONES_BODY,
+      color: cfg.color,
+    });
+    scene.add(skel.group);
+    return skel;
   });
-  scene.add(skel.group);
-  return skel;
-});
+}
 
 export function animate_csv() {
   requestAnimationFrame(animate_csv);
