@@ -4,6 +4,7 @@ export function createSkeletonMP({ excluded, bones, color }) {
   // Root group that contains everything (joints + bone lines)
   const group = new THREE.Group();
   // Geometry/material shared by all joint spheres (efficient reuse)
+  // base.rotation.z = -Math.PI / 4; // TODO: rotate skeleton, but independent from floor
 
   const jointGeom = new THREE.SphereGeometry(0.025, 16, 16);
   const jointMat = new THREE.MeshStandardMaterial({
