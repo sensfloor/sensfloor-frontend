@@ -2,14 +2,15 @@ import * as THREE from "three";
 import { POSE_LANDMARKS } from "../utils/consts";
 
 export function backendFrameToThree(data, patchToWorld) {
+  const poseEstimate = data.pose_estimate
   //  position_x, position_y (patch coordinates of hip)
-  const hipPatch = { x: data.position_x, y: data.position_y };
+  const hipPatch = { x: poseEstimate.position_x, y: poseEstimate.position_y };
   const T = patchToWorld(hipPatch.x, hipPatch.y); // TODO: refactor this patchToWorl logic
 
   const poseWorld = new Map();
 
   // array of joints  {joint: str, x, y, z}
-  const joints = data.pose;
+  const joints = poseEstimate.pose;
   let lowestJoint = joints[0];
   for (const j of joints) {
     if (j.y > lowestJoint.y) {

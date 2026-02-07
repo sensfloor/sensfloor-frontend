@@ -25,8 +25,12 @@ export function animate_socket() {
   renderer.render(scene, camera);
 
   const raw_data = buffer.get();
-  const convertedFrame = backendFrameToThree(raw_data, (x, y) =>
-    floor.patchWorld(x, y),
-  );
-  skel.setPose(convertedFrame.poseWorld);
+
+  if (raw_data != null) {
+    const convertedFrame = backendFrameToThree(raw_data, (x, y) =>
+      floor.patchWorld(x, y),
+    );
+    skel.setPose(convertedFrame.poseWorld);
+  }
+
 }
