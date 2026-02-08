@@ -17,7 +17,8 @@ ws.onclose = () => {
 
 ws.onmessage = (e) => {
   const raw = JSON.parse(e.data);
-  console.debug("Full raw data:", JSON.stringify(raw, null, 2));
+  // console.debug("Full raw data:", JSON.stringify(raw, null, 2));
+  console.debug("Full raw data:", raw);
 
   // if (raw.pose.length != 0) {
   //   floor.setMarkerByPatch(raw.position_x, raw.position_y, true);

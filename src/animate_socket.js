@@ -26,7 +26,7 @@ export function animate_socket() {
 
   const raw_data = buffer.get();
 
-  if (raw_data != null) {
+  if (raw_data) {
       // update skelton
       const convertedFrame = backendFrameToThree(raw_data.pose_estimate, (x, y) =>
         floor.patchWorld(x, y),
