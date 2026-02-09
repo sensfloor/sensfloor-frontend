@@ -10,7 +10,7 @@ function parse_csv_row(rowObject) {
     const zKey = `z${index}`;
 
     // Only add the joint if the data exists in the row
-    if (rowObject[xKey] !== undefined) {
+    if (rowObject[xKey]) {
       poseData.push({
         joint: jointName,
         x: rowObject[xKey],
@@ -57,7 +57,7 @@ export async function streamMultipleCsvsToBuffer(filePaths, fps, buffer) {
 
         headers.forEach((header, colIndex) => {
           const val = columns[colIndex];
-          rowObject[header] = isNaN(Number(val)) ? val : Number(val);
+          rowObject[header] = val==="" ? null : Number(val);
         });
 
         // Process the row through your existing parser
