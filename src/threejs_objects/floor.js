@@ -86,12 +86,21 @@ export function createTriSensorFloor({ cols, rows, patchSize }) {
           new THREE.MeshBasicMaterial({
             color: 0x808080,
             transparent: true, 
-          //  wireframe: true,
+            //wireframe: true,
             side: THREE.DoubleSide,
             opacity: 0.0,
           })
         );
+
+        const lineMat = new THREE.LineBasicMaterial({ color:0x29292c, transparent: false });
+        const lineA = new THREE.Line(
+          new THREE.BufferGeometry().setFromPoints([c, A]), lineMat );
+        const lineB = new THREE.Line(
+          new THREE.BufferGeometry().setFromPoints([c, B]),lineMat);
+
         patchGroup.add(m);
+        patchGroup.add(lineA);
+        patchGroup.add(lineB);
         patchTriangles.push(m);
       }
 
