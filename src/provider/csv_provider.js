@@ -47,6 +47,7 @@ export async function streamMultipleCsvsToBuffer(filePaths, fps, buffer) {
       const lines = text.split(/\r?\n/).filter((l) => l.trim() !== ""); // Skip empty lines
       if (lines.length < 2) continue;
 
+      console.log("text with length", lines.length)
       const headers = lines[0].split(",").map((h) => h.trim());
 
       // Start from 1 to skip headers
@@ -63,7 +64,7 @@ export async function streamMultipleCsvsToBuffer(filePaths, fps, buffer) {
         const processedRow = parse_csv_row(rowObject);
 
         // Initialize the frame array if it doesn't exist yet
-        const frameIndex = i - 1;
+        const frameIndex = rowObject["frame"];
         if (!synchronizedFrames[frameIndex]) {
           synchronizedFrames[frameIndex] = [];
         }
@@ -90,7 +91,13 @@ export async function streamMultipleCsvsToBuffer(filePaths, fps, buffer) {
       }
 
       // Pushes an ARRAY of poses to the buffer
-      buffer.push(synchronizedFrames[frameIndex]);
+      const poses_from_frame = synchronizedFrames[frameIndex]
+      if (poses_from_frame && poses_from_frame.length >= filePaths.length){
+        buffer.push(synchronizedFrames[frameIndex]);
+      }
+      else{
+        console.log("not all files have a pose for this one, skipping", poses_from_frame)
+      }
 
       frameIndex++;
       setTimeout(pushFrame, intervalMs);

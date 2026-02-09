@@ -5,7 +5,6 @@ export function backendFrameToThree(poseEstimate, patchToWorld) {
   //  position_x, position_y (patch coordinates of hip)
   const hipPatch = { x: poseEstimate.position_x, y: poseEstimate.position_y };
   const T = patchToWorld(hipPatch.x, hipPatch.y); // TODO: refactor this patchToWorl logic
-  console.log("hip patch coords:", hipPatch, "converted to world coords:", T);
   const poseWorld = new Map();
 
   // array of joints  {joint: str, x, y, z}
