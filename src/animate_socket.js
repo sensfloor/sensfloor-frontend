@@ -36,6 +36,6 @@ export function animate_socket() {
       // update floor signals
       const activated_pathch = raw_data.activations;
       //console.log("activated patch:", activated_pathch.positions);
-      floor.animatePatch(activated_pathch.positions,(x, y) => floor.patchWorld(x, y));
+      floor.animatePatch(activated_pathch.positions,activated_pathch.signals ,(x, y) => floor.patchWorld(x, y));
   }
 }

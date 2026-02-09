@@ -8,11 +8,11 @@ export function createTriSensorFloor({ cols, rows, patchSize }) {
   const base = new THREE.Mesh(
     new THREE.PlaneGeometry(width, height),
     new THREE.MeshStandardMaterial({
-      color: 0xffffff,
+      color: 0xaba59c,  // 0xffffff
       roughness: 0.95,
       side: THREE.DoubleSide,
-      transparent: true,
-      opacity: 0.25,
+      transparent: false,
+      opacity: 1.0,
     }),
   );
   base.rotation.x = -Math.PI / 2;
@@ -21,9 +21,9 @@ export function createTriSensorFloor({ cols, rows, patchSize }) {
   // ---- custom grid lines (6×4) ----
   const grid = new THREE.Group();
   const lineMat = new THREE.LineBasicMaterial({
-    color: 0x888888,
-    transparent: true,
-    opacity: 0.7,
+    color: 0x29292c,
+    transparent: false,
+    opacity: 1.0,
   });
   // vertical lines (x)
   for (let i = 0; i <= cols; i++) {
@@ -45,20 +45,60 @@ export function createTriSensorFloor({ cols, rows, patchSize }) {
   }
   group.add(grid);
 
+  
+
+  
+
    // make 4x6 number of patch meshes to visualize activated patches but they are hidden in the intial setup
   const patchMarkers = [];
-  for (let i = 0; i < cols * rows; i++) {
-    const m = new THREE.Mesh(
-      new THREE.PlaneGeometry(patchSize, patchSize),
-      new THREE.MeshStandardMaterial({ color: 0xffaa00, transparent: true, opacity: 0.9 }),
-    );
-    m.rotation.x = -Math.PI / 2;
-    m.position.y = 0.001;
-    m.visible = false;
-    group.add(m);
-    patchMarkers.push(m)
-   
-  }
+  const s = patchSize / 2;
+  const edge_pairs = [
+  [[0,0,-s], [s,0,-s]], // top right tringle   index: 1 
+  [[s,0,-s], [s,0,0]],  // top right below  index: 2 
+  [[s,0,0],  [s,0,s]], // bottom top right  index:3
+  [[s,0,s],  [0,0,s]],  //bottm right   index : 4
+  [[0,0,s],  [-s,0,s]],  // bottom  bottom left ..
+  [[-s,0,s], [-s,0,0]], // bottm top left ..
+  [[-s,0,0], [-s,0,-s]], //top below left ..
+  [[-s,0,-s],[0,0,-s]],]; // top top left ..
+
+
+  for (let i = 0; i < cols; i++) {
+    patchMarkers[i] = [];
+    for (let j = 0; j < rows; j++) {
+      const center = patchWorld(i, j);
+      const x = center.x +patchSize/2;
+      const z = center.z -patchSize/2;
+
+      const patchGroup = new THREE.Group();
+      const patchTriangles = [];
+
+      for (let k = 0; k < 8; k++) {
+        const c = new THREE.Vector3(x, 0.01, z);
+        const A = new THREE.Vector3(
+          x + edge_pairs[k][0][0],0.01,z + edge_pairs[k][0][2]);
+        const B = new THREE.Vector3(
+          x + edge_pairs[k][1][0],0.01,z + edge_pairs[k][1][2]);
+        const g = new THREE.BufferGeometry()
+          .setFromPoints([c, A, B]);
+        const m = new THREE.Mesh(
+          g,
+          new THREE.MeshBasicMaterial({
+            color: 0x808080,
+            transparent: true, 
+          //  wireframe: true,
+            side: THREE.DoubleSide,
+            opacity: 0.0,
+          })
+        );
+        patchGroup.add(m);
+        patchTriangles.push(m);
+      }
+
+      group.add(patchGroup);
+      patchMarkers[i][j] = patchTriangles; // data structure = [x][y][8 triagnles]
+    }
+}
 
 
   // continuous patch coordinate -> world (XZ)
@@ -69,33 +109,36 @@ export function createTriSensorFloor({ cols, rows, patchSize }) {
     return new THREE.Vector3(worldX, 0, worldZ);
   }
 
-  function animatePatch(activated_patch, patchToWorld){
-    if (!Array.isArray(activated_patch)) return;
-    for (const m of patchMarkers) m.visible = false;
-        
-    // display only activated patches
-    for (let i = 0; i < activated_patch.length; i++) {
-      const [x, y] = activated_patch[i];
-      const worldPos = patchToWorld(x, y);
-      patchMarkers[i].position.set(worldPos.x+patchSize/2, 0.002, worldPos.z+patchSize/2);
-      patchMarkers[i].visible = true;
+  let memory_index = [];
+
+  function animatePatch(activated_patch, signals){
+    console.log("animatePatch called with", activated_patch);
+    for (let i = 0; i < memory_index.length; i++){
+      const [x,y] = memory_index[i];
+      for (let k = 0; k < 8; k++){
+        patchMarkers[x][y][k].material.opacity = 0.0;
+      }
     }
+    if (activated_patch.length != signals.length){
+      return}
+    for (let i = 0; i < activated_patch.length; i++){
+      const x = activated_patch[i][0];
+      const y = activated_patch[i][1];
+      const sig = signals[i]; 
+      memory_index.push(activated_patch[i])
+      for (let k = 0; k < 8; k++){
+        const value = sig[k];
+        const intensity =Math.max(value - 140, 0) / 110;　
+        const tri = patchMarkers[x][y][k];
+       // console.log(`intensity: ${intensity } `);
+        tri.material.opacity = intensity*100;
+     
+      }
+  }
+  memory_index =
+    activated_patch.map(([x,y]) => [x,y]);
   }
 
-  function setMarkerByPatch(x, y, visible = true) {
-    const p = patchWorld(x, y);
-    marker.position.x = p.x;
-    marker.position.z = p.z;
-    if (visible == true) {
-      marker.material.color.set(0x00000000);
-      marker.visible = true;
-    } else {
-      marker.visible = false;
-    }
-  
-
-    //make8TriangleGeometries.material.color = 0xff0000;
-  }
 
   return { group, patchWorld, animatePatch, cols, rows, patchSize};
 }

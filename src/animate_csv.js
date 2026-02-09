@@ -9,6 +9,7 @@ import {
   controls,
   renderer,
   floor,
+  keys
 } from "./threejs_objects/three_js_scene_setup.js";
 
 let buffer = null;
@@ -33,6 +34,25 @@ export function setup_csv_animate(config) {
 
 export function animate_csv() {
   requestAnimationFrame(animate_csv);
+
+  const moveSpeed = 0.1;
+  if (keys['ArrowUp']) {
+    camera.position.y += moveSpeed;
+    controls.target.y += moveSpeed;
+  }
+  if (keys['ArrowDown']) {
+    camera.position.y -= moveSpeed;
+    controls.target.y -= moveSpeed;
+  }
+  if (keys['ArrowLeft']) {
+    camera.position.x -= moveSpeed;
+    controls.target.x -= moveSpeed;
+  }
+  if (keys['ArrowRight']) {
+    camera.position.x += moveSpeed;
+    controls.target.x += moveSpeed;
+  }
+
   controls.update();
   renderer.render(scene, camera);
 
