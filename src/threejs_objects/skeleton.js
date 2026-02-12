@@ -1,83 +1,93 @@
 import * as THREE from "three";
 
-// Added 'rotationOffset' to the destructuring (defaults to 0 if not provided)
 export function createSkeletonMP({ excluded, bones, color, rotationOffset }) {
   const group = new THREE.Group();
-
-  console.debug(rotationOffset)
   
-  // 1. Apply the fixed rotation axis immediately
-  // We convert degrees to radians (Deg * PI / 180)
-  // Rotating Y axis is usually the vertical "up/down" axis (pirouette)
+  // Apply rotation
   group.rotation.y = rotationOffset * (Math.PI / 180);
 
   const jointGeom = new THREE.SphereGeometry(0.025, 16, 16);
-  const jointMat = new THREE.MeshStandardMaterial({
-    color: color.jointColor,
-    depthTest: false,
-  });
-  
+  const jointMat = new THREE.MeshStandardMaterial({ color: color.jointColor, depthTest: false });
   const joints = new Map(); 
 
   const boneGeom = new THREE.BufferGeometry();
-  const boneMat = new THREE.LineBasicMaterial({
-    color: color.boneColor,
-    depthTest: false,
-  });
-  
+  const boneMat = new THREE.LineBasicMaterial({ color: color.boneColor, depthTest: false });
   const boneLine = new THREE.LineSegments(boneGeom, boneMat);
   group.add(boneLine);
+
+  // Initialize a target for the group itself (the nose position)
+  group.userData.target = new THREE.Vector3(); 
 
   function ensureJoint(mpIndex) {
     if (excluded.has(mpIndex)) return null;
     if (!joints.has(mpIndex)) {
       const m = new THREE.Mesh(jointGeom, jointMat);
+      // Initialize a target for this specific joint
+      m.userData.target = new THREE.Vector3(); 
       joints.set(mpIndex, m);
       group.add(m);
     }
     return joints.get(mpIndex);
   }
 
- function setPose(poseMap) {
-    // 1. Find the "Nose" (Index 0) to use as the pivot point
+  // 1. DATA RECEIVER: Only calculates where things SHOULD go
+  function setPose(poseMap) {
     const noseRaw = poseMap.get(0);
-    // Fallback to (0,0,0) if nose isn't found, to prevent crash
     const center = noseRaw ? noseRaw : new THREE.Vector3(0, 0, 0);
 
-    // 2. Move the entire Group container to the Nose's world position.
-    // This ensures the skeleton visually appears in the correct spot.
+    // Update Group Target (Nose)
     if (noseRaw) {
-        group.position.copy(noseRaw);
+        group.userData.target.copy(noseRaw);
     }
 
-    // 3. Update Joints: Subtract 'center' so the Nose is always at local (0,0,0)
+    // Update Joint Targets
     for (const [idx, p] of poseMap.entries()) {
       const joint = ensureJoint(idx);
       if (joint) {
-        // Local Pos = Absolute Pos - Nose Pos
-        joint.position.copy(p).sub(center);
+        // Calculate the target local position (Absolute - Center)
+        // We do NOT move the mesh here, just update the target
+        joint.userData.target.copy(p).sub(center);
       }
     }
+  }
 
-    // 4. Update Bone Lines: Subtract 'center' from these coords too
+  // 2. VISUAL UPDATER: Moves things smoothly every frame
+  function tick() {
+    const smoothingFactor = 0.2; // 0.1 = slow/smooth, 0.5 = fast/snappy
+
+    // Smoothly move the entire group (Nose)
+    group.position.lerp(group.userData.target, smoothingFactor);
+
+    // Smoothly move all joints
+    joints.forEach((joint) => {
+        joint.position.lerp(joint.userData.target, smoothingFactor);
+    });
+
+    // Rebuild bones based on the CURRENT SMOOTHED positions
+    // (We read from joint.position, not the raw data map)
     const pts = []; 
     for (const [a, b] of bones) {
       if (excluded.has(a) || excluded.has(b)) continue;
       
-      const pa = poseMap.get(a);
-      const pb = poseMap.get(b);
-      if (!pa || !pb) continue;
+      const jointA = joints.get(a);
+      const jointB = joints.get(b);
+      
+      if (!jointA || !jointB) continue;
 
-      // We push (Position - Center)
+      // Because joints are already local to the group, we just use their positions directly
       pts.push(
-        pa.x - center.x, pa.y - center.y, pa.z - center.z,
-        pb.x - center.x, pb.y - center.y, pb.z - center.z
+        jointA.position.x, jointA.position.y, jointA.position.z,
+        jointB.position.x, jointB.position.y, jointB.position.z
       );
     }
     
-    boneGeom.setAttribute("position", new THREE.Float32BufferAttribute(pts, 3));
-    boneGeom.computeBoundingSphere();
+    if (pts.length > 0) {
+        boneGeom.setAttribute("position", new THREE.Float32BufferAttribute(pts, 3));
+        boneGeom.attributes.position.needsUpdate = true; // Important!
+        boneGeom.computeBoundingSphere();
+    }
   }
 
-  return { group, setPose };
+  // Return the new tick function alongside setPose
+  return { group, setPose, tick };
 }

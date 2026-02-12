@@ -21,21 +21,24 @@ scene.add(skel.group);
 
 export function animate_socket() {
   requestAnimationFrame(animate_socket);
+  
+  if (skel && skel.tick) skel.tick(); 
+
   controls.update();
   renderer.render(scene, camera);
 
   const raw_data = buffer.get();
 
   if (raw_data) {
-      // update skelton
-      const convertedFrame = backendFrameToThree(raw_data.pose_estimate, (x, y) =>
+    
+    // skeleton update
+    const convertedFrame = backendFrameToThree(raw_data.pose_estimate, (x, y) =>
         floor.patchWorld(x, y),
       );
-      skel.setPose(convertedFrame.poseWorld);   // convertedFrame.poseWorld = dictionary of joints idx to world coordinates of joints
+      skel.setPose(convertedFrame.poseWorld); 
 
-      // update floor signals
-      const activated_pathch = raw_data.activations;
-      //console.log("activated patch:", activated_pathch.positions);
-      floor.animatePatch(activated_pathch.positions,activated_pathch.signals ,(x, y) => floor.patchWorld(x, y));
+      // Floor update...
+      const activated_patch = raw_data.activations;
+      floor.animatePatch(activated_patch.positions, activated_patch.signals, (x, y) => floor.patchWorld(x, y));
   }
 }

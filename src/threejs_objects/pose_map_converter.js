@@ -3,7 +3,8 @@ import { POSE_LANDMARKS } from "../utils/consts";  // Map from mediapipe name to
 
 export function backendFrameToThree(poseEstimate, patchToWorld) {
   //  position_x, position_y (patch coordinates of hip)
-  const hipPatch = { x: poseEstimate.position_x, y: poseEstimate.position_y };
+
+const hipPatch = { x: poseEstimate.position_x, y: poseEstimate.position_y };
   const T = patchToWorld(hipPatch.x, hipPatch.y); // TODO: refactor this patchToWorl logic
   const poseWorld = new Map();
 

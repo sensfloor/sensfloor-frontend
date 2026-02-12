@@ -37,8 +37,13 @@ export function animate_csv() {
   controls.update();
   renderer.render(scene, camera);
 
-  const raw_data_frames = buffer.get(); // Assumi
-  // ng this returns an array of frames [frame1, frame2, ...]
+  const raw_data_frames = buffer.get();
+
+  skeletons.forEach((skel, index) => {
+    if (skel && skel.tick) {
+      skel.tick();
+    }
+  })
 
   if (raw_data_frames && raw_data_frames.length > 0) {
     // Loop through the skeletons and update each with its corresponding frame data
