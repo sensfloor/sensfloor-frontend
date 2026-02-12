@@ -9,7 +9,6 @@ import {
   controls,
   renderer,
   floor,
-  keys
 } from "./threejs_objects/three_js_scene_setup.js";
 
 let buffer = null;
@@ -25,7 +24,7 @@ export function setup_csv_animate(config) {
       excluded: EXCLUDED_JOINTS,
       bones: MP_BONES_BODY,
       color: cfg.color,
-      rotationOffset: cfg.rotationOffset
+      rotationOffset: cfg.rotationOffset,
     });
     scene.add(skel.group);
     return skel;
@@ -35,28 +34,11 @@ export function setup_csv_animate(config) {
 export function animate_csv() {
   requestAnimationFrame(animate_csv);
 
-  const moveSpeed = 0.1;
-  if (keys['ArrowUp']) {
-    camera.position.y += moveSpeed;
-    controls.target.y += moveSpeed;
-  }
-  if (keys['ArrowDown']) {
-    camera.position.y -= moveSpeed;
-    controls.target.y -= moveSpeed;
-  }
-  if (keys['ArrowLeft']) {
-    camera.position.x -= moveSpeed;
-    controls.target.x -= moveSpeed;
-  }
-  if (keys['ArrowRight']) {
-    camera.position.x += moveSpeed;
-    controls.target.x += moveSpeed;
-  }
-
   controls.update();
   renderer.render(scene, camera);
 
-  const raw_data_frames = buffer.get(); // Assuming this returns an array of frames [frame1, frame2, ...]
+  const raw_data_frames = buffer.get(); // Assumi
+  // ng this returns an array of frames [frame1, frame2, ...]
 
   if (raw_data_frames && raw_data_frames.length > 0) {
     // Loop through the skeletons and update each with its corresponding frame data
