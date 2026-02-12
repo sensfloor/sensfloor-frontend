@@ -1,4 +1,5 @@
 import { POSE_LANDMARKS } from "../utils/consts.js";
+import {isPaused} from "./key_provider.js";
 
 function parse_csv_row(rowObject) {
   const poseData = [];
@@ -80,13 +81,18 @@ export async function streamMultipleCsvsToBuffer(filePaths, fps, buffer) {
       `Sync complete. Streaming ${synchronizedFrames.length} multi-pose frames.`,
     );
 
+
     // 2. Playback Loop
     let frameIndex = 0;
     const intervalMs = 1000 / fps;
 
     const pushFrame = () => {
       if (frameIndex >= synchronizedFrames.length) {
-        console.log("Parallel stream finished.");
+        return;
+      }
+
+      if (isPaused) {
+        setTimeout(pushFrame, 500);
         return;
       }
 

@@ -121,7 +121,7 @@ export function createTriSensorFloor({ cols, rows, patchSize }) {
   let memory_index = [];
 
   function animatePatch(activated_patch, signals){
-    console.log("animatePatch called with", activated_patch);
+    //console.log("animatePatch called with", activated_patch);
     for (let i = 0; i < memory_index.length; i++){
       const [x,y] = memory_index[i];
       for (let k = 0; k < 8; k++){
