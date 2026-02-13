@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { presetViews } from '../config.js';
+import {copyTemplate} from "../utils/create_html_element.js"
 
 let presetCameras = [];
 let presetRenderers = [];
@@ -13,11 +14,10 @@ export function initial_Previews(scene, camera, controls) {
     return cam;
   });
 
-  const presetCanvases = [
-    document.getElementById("presetView1"),
-    document.getElementById("presetView2"),
-    document.getElementById("presetView3"),
-  ];
+  const presetCanvases = presetViews.map((view) => {
+    return copyTemplate("preset-view-template", view.id);
+  });
+
 
   presetRenderers = presetCanvases.map((canvas) => {
     if (!canvas) return null;

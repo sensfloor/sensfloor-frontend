@@ -5,6 +5,7 @@ import './styles.css';
 import {CSV_SKELETON_CONFIGS, use_socket} from "./config.js";
 
 
+
 if (use_socket) {
   animate_socket(); // TODO disable socket when it's not being used (it spams the log)
 

@@ -3,16 +3,6 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { createTriSensorFloor } from "./floor.js";
 import { initial_Previews, renderPresetViews }  from "../preview/present_preview.js";
 
-
-export const keys = {};
-
-document.addEventListener('keydown', (e) => {
-  keys[e.key] = true;
-});
-document.addEventListener('keyup', (e) => {
-  keys[e.key] = false;
-});
-
 export const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x111111);
 
@@ -47,4 +37,3 @@ scene.add(floor.group);
 
 initial_Previews(scene, camera, controls);
 renderPresetViews(scene);
-
