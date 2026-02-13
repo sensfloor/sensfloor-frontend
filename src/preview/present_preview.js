@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { presetViews } from './camera_presets.js';
+import { presetViews } from '../config.js';
 
 let presetCameras = [];
 let presetRenderers = [];

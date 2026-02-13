@@ -10,8 +10,6 @@ import {
   renderer,
   floor,
 } from "./threejs_objects/three_js_scene_setup.js";
-import { initial_Previews, renderPresetViews }  from "./preview/present_preview.js";
-import * as THREE from 'three';
 
 let buffer = null;
 let skeletons = null;
@@ -32,14 +30,12 @@ export function setup_csv_animate(config) {
     return skel;
   });
 }
-initial_Previews(scene, camera, controls);
 
 export function animate_csv() {
   requestAnimationFrame(animate_csv);
 
   controls.update();
   renderer.render(scene, camera);
-  renderPresetViews(scene,camera, controls);
 
   const raw_data_frames = buffer.get();
 
