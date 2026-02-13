@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { createTriSensorFloor } from "./floor.js";
+import { initial_Previews, renderPresetViews }  from "../preview/present_preview.js";
 
 
 export const keys = {};
@@ -16,7 +17,7 @@ export const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x111111);
 
 export const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.01, 500);
-camera.position.set(0, 5, 0);
+camera.position.set(0, 3, 3);
 camera.lookAt(0, 0, 0);
 
 export const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -43,3 +44,7 @@ window.addEventListener('resize', () => {
 
 export const floor = createTriSensorFloor({ cols: 6, rows: 4, patchSize: 0.5 });
 scene.add(floor.group);
+
+initial_Previews(scene, camera, controls);
+renderPresetViews(scene);
+

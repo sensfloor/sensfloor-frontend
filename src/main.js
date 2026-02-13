@@ -2,9 +2,7 @@ import { animate_csv, setup_csv_animate } from "./animate_csv";
 import { animate_socket } from "./animate_socket";
 import { SKELETON_COLORS } from "./utils/colors";
 import './styles.css';
-
-const use_socket = false;
-
+const use_socket = true;
 const CSV_SKELETON_CONFIGS = [
   { path: "../video_poses.csv", color: SKELETON_COLORS[2], rotationOffset: 45 },
 ];
