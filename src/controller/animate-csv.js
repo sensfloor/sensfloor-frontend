@@ -1,5 +1,5 @@
 import { createSkeletonMP } from "../threejs-objects/skeleton.js";
-import { backendFrameToThree } from "../threejs-objects/pose-map-converter.js";
+import { backendFrameToThree } from "../utils/pose-map-converter.js";
 import { MP_BONES_BODY, EXCLUDED_JOINTS } from "../utils/landmark.js";
 import { createBuffer } from "../utils/buffer.js";
 import { streamMultipleCsvsToBuffer } from "../provider/csv-provider.js";
@@ -9,8 +9,8 @@ import {
   controls,
   renderer,
   floor,
-} from "../threejs-objects/setup-scene.js";
-import {renderPresetViews} from "../preview/present-preview.js";
+} from "../provider/scene-provider.js";
+import {renderPresetViews} from "../provider/canvas-provider.js";
 import {update_canvas} from "../config.js";
 
 let buffer = null;
