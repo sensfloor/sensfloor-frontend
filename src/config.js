@@ -16,7 +16,7 @@ export const presetViews = [
   },
   {
     id:"presetView2",
-    position: new THREE.Vector3(0.688504199373171, 0.6711773053180272, 1.7392904356997945),   // comparison view for two poses
+    position: new THREE.Vector3(0.7, 0.7, 1.7),   // comparison view for two poses
     lookAt: new THREE.Vector3(0, 0.7, 0),
   },
   {
