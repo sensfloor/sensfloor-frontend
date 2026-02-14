@@ -1,15 +1,15 @@
 # Sensfloor Pose Viewer
 This Frontend is build to visualize the outputs from here https://github.com/sensfloor/sensfloor-pipeline
+but it can be used to visualize any JSON pose in the form of [this](./public/sample-data.js)
 
 ![Skeleton](./public/frontend-scene.png)
 
-It can visualize any JSON Poses sent via websocket in the format of [this](./public/sample_data.js)
 
 Additionally, Multiple CSV Files can be streamed to compare poses
 
 ![Skeleton](./public/frontend-comparison.png)
 
-More configurations can be found [here](./src/config.js)
+To find out exactly how to configure the app, go [here](./src/config.js)
 
 # Prerequisites
 To be able to run this app you will need `npm` (reccommended at least version 9.6.7)
