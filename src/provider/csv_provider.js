@@ -23,8 +23,8 @@ function parse_csv_row(rowObject) {
 
   return {
     // These are placeholders as the CSV does not contain root position data
-    position_x: 0,
-    position_y: 0,
+    position_x: 3,
+    position_y: 2,
     pose: poseData,
   };
 }

@@ -44,7 +44,7 @@ export function animate_csv() {
       skel.tick();
     }
   })
-
+  
   if (raw_data_frames && raw_data_frames.length > 0) {
     // Loop through the skeletons and update each with its corresponding frame data
     skeletons.forEach((skel, index) => {
