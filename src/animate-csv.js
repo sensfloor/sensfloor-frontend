@@ -1,15 +1,15 @@
-import { createSkeletonMP } from "./threejs_objects/skeleton.js";
-import { backendFrameToThree } from "./threejs_objects/pose_map_converter.js";
+import { createSkeletonMP } from "./threejs-objects/skeleton.js";
+import { backendFrameToThree } from "./threejs-objects/pose-map-converter.js";
 import { MP_BONES_BODY, EXCLUDED_JOINTS } from "./utils/consts.js";
 import { create_buffer } from "./utils/buffer.js";
-import { streamMultipleCsvsToBuffer } from "./provider/csv_provider.js";
+import { streamMultipleCsvsToBuffer } from "./provider/csv-provider.js";
 import {
   scene,
   camera,
   controls,
   renderer,
   floor,
-} from "./threejs_objects/three_js_scene_setup.js";
+} from "./threejs-objects/setup-scene.js";
 
 let buffer = null;
 let skeletons = null;
@@ -43,8 +43,8 @@ export function animate_csv() {
     if (skel && skel.tick) {
       skel.tick();
     }
-  })
-  
+  });
+
   if (raw_data_frames && raw_data_frames.length > 0) {
     // Loop through the skeletons and update each with its corresponding frame data
     skeletons.forEach((skel, index) => {

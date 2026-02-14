@@ -1,14 +1,13 @@
-import * as THREE from 'three';
-import { presetViews } from '../config.js';
-import {copyTemplate} from "../utils/create_html_element.js"
+import * as THREE from "three";
+import { presetViews } from "../config.js";
+import { copyTemplate } from "../utils/create-html-element.js";
 
 let presetCameras = [];
 let presetRenderers = [];
 
 export function initial_Previews(scene, camera, controls) {
-
   presetCameras = presetViews.map((view) => {
-    const cam = new THREE.PerspectiveCamera(60, 4/3, 0.01, 500);
+    const cam = new THREE.PerspectiveCamera(60, 4 / 3, 0.01, 500);
     cam.position.copy(view.position);
     cam.lookAt(view.lookAt);
     return cam;
@@ -17,7 +16,6 @@ export function initial_Previews(scene, camera, controls) {
   const presetCanvases = presetViews.map((view) => {
     return copyTemplate("preset-view-template", view.id);
   });
-
 
   presetRenderers = presetCanvases.map((canvas) => {
     if (!canvas) return null;

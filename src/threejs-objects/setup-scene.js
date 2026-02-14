@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { createTriSensorFloor } from "./floor.js";
-import { initial_Previews, renderPresetViews }  from "../preview/present_preview.js";
+import { initial_Previews, renderPresetViews }  from "../preview/present-preview.js";
 
 export const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x111111);

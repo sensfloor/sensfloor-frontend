@@ -1,5 +1,5 @@
 import { POSE_LANDMARKS } from "../utils/consts.js";
-import {isPaused} from "./key_provider.js";
+import { isPaused } from "./key-provider.js";
 
 function parse_csv_row(rowObject) {
   const poseData = [];
@@ -48,7 +48,7 @@ export async function streamMultipleCsvsToBuffer(filePaths, fps, buffer) {
       const lines = text.split(/\r?\n/).filter((l) => l.trim() !== ""); // Skip empty lines
       if (lines.length < 2) continue;
 
-      console.log("text with length", lines.length)
+      console.log("text with length", lines.length);
       const headers = lines[0].split(",").map((h) => h.trim());
 
       // Start from 1 to skip headers
@@ -58,7 +58,7 @@ export async function streamMultipleCsvsToBuffer(filePaths, fps, buffer) {
 
         headers.forEach((header, colIndex) => {
           const val = columns[colIndex];
-          rowObject[header] = val==="" ? null : Number(val);
+          rowObject[header] = val === "" ? null : Number(val);
         });
 
         // Process the row through your existing parser
@@ -81,7 +81,6 @@ export async function streamMultipleCsvsToBuffer(filePaths, fps, buffer) {
       `Sync complete. Streaming ${synchronizedFrames.length} multi-pose frames.`,
     );
 
-
     // 2. Playback Loop
     let frameIndex = 0;
     const intervalMs = 1000 / fps;
@@ -97,12 +96,14 @@ export async function streamMultipleCsvsToBuffer(filePaths, fps, buffer) {
       }
 
       // Pushes an ARRAY of poses to the buffer
-      const poses_from_frame = synchronizedFrames[frameIndex]
-      if (poses_from_frame && poses_from_frame.length >= filePaths.length){
+      const poses_from_frame = synchronizedFrames[frameIndex];
+      if (poses_from_frame && poses_from_frame.length >= filePaths.length) {
         buffer.push(synchronizedFrames[frameIndex]);
-      }
-      else{
-        console.log("not all files have a pose for this one, skipping", poses_from_frame)
+      } else {
+        console.log(
+          "not all files have a pose for this one, skipping",
+          poses_from_frame,
+        );
       }
 
       frameIndex++;
