@@ -5,7 +5,7 @@ import { copyTemplate } from "../utils/create-html-element.js";
 let presetCameras = [];
 let presetRenderers = [];
 
-export function initial_Previews(scene, camera, controls) {
+export function initiatePreviews(scene, camera, controls) {
   presetCameras = presetViews.map((view) => {
     const cam = new THREE.PerspectiveCamera(60, 4 / 3, 0.01, 500);
     cam.position.copy(view.position);

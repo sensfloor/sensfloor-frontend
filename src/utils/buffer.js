@@ -1,4 +1,4 @@
-export function create_buffer() {
+export function createBuffer() {
   return {
     _latest: null,
     push: function (item) {

@@ -19,8 +19,8 @@ const skel = createSkeletonMP({
 });
 scene.add(skel.group);
 
-export function animate_socket() {
-  requestAnimationFrame(animate_socket);
+export function animateSocket() {
+  requestAnimationFrame(animateSocket);
 
   if (skel && skel.tick) skel.tick();
 

@@ -1,8 +1,8 @@
-import { create_buffer } from "../utils/buffer";
+import { createBuffer } from "../utils/buffer";
 
 const ws = new WebSocket("ws://127.0.0.1:8765");
 
-export const buffer = create_buffer();
+export const buffer = createBuffer();
 
 ws.onopen = () => {
   console.log(" WebSocket connected");

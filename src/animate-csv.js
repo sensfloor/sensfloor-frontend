@@ -1,7 +1,7 @@
 import { createSkeletonMP } from "./threejs-objects/skeleton.js";
 import { backendFrameToThree } from "./threejs-objects/pose-map-converter.js";
 import { MP_BONES_BODY, EXCLUDED_JOINTS } from "./utils/consts.js";
-import { create_buffer } from "./utils/buffer.js";
+import { createBuffer } from "./utils/buffer.js";
 import { streamMultipleCsvsToBuffer } from "./provider/csv-provider.js";
 import {
   scene,
@@ -13,8 +13,8 @@ import {
 
 let buffer = null;
 let skeletons = null;
-export function setup_csv_animate(config) {
-  buffer = create_buffer();
+export function setupCSVAnimate(config) {
+  buffer = createBuffer();
   const csvPaths = config.map((cfg) => cfg.path);
   streamMultipleCsvsToBuffer(csvPaths, 15, buffer);
 
@@ -31,8 +31,8 @@ export function setup_csv_animate(config) {
   });
 }
 
-export function animate_csv() {
-  requestAnimationFrame(animate_csv);
+export function animateCSV() {
+  requestAnimationFrame(animateCSV);
 
   controls.update();
   renderer.render(scene, camera);

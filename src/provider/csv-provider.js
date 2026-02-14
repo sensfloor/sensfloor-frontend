@@ -1,7 +1,7 @@
 import { POSE_LANDMARKS } from "../utils/consts.js";
 import { isPaused } from "./key-provider.js";
 
-function parse_csv_row(rowObject) {
+function parseCSVRow(rowObject) {
   const poseData = [];
 
   // Iterate through all defined landmarks to find matching columns in the row
@@ -62,7 +62,7 @@ export async function streamMultipleCsvsToBuffer(filePaths, fps, buffer) {
         });
 
         // Process the row through your existing parser
-        const processedRow = parse_csv_row(rowObject);
+        const processedRow = parseCSVRow(rowObject);
 
         // Initialize the frame array if it doesn't exist yet
         const frameIndex = rowObject["frame"];
