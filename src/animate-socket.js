@@ -6,7 +6,7 @@ import {
   renderer,
   floor,
 } from "./threejs-objects/setup-scene.js"
-import { MP_BONES_BODY, EXCLUDED_JOINTS } from "./utils/consts.js";
+import { MP_BONES_BODY, EXCLUDED_JOINTS } from "./utils/landmark.js";
 import { buffer } from "./provider/socket-provider.js";
 import { SKELETON_COLORS } from "./utils/colors.js";
 import { createSkeletonMP } from "./threejs-objects/skeleton.js";

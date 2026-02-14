@@ -1,4 +1,4 @@
-import { POSE_LANDMARKS } from "../utils/consts.js";
+import { POSE_LANDMARKS } from "../utils/landmark.js";
 import { isPaused } from "./key-provider.js";
 
 function parseCSVRow(rowObject) {

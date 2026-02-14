@@ -1,6 +1,6 @@
 import { createSkeletonMP } from "./threejs-objects/skeleton.js";
 import { backendFrameToThree } from "./threejs-objects/pose-map-converter.js";
-import { MP_BONES_BODY, EXCLUDED_JOINTS } from "./utils/consts.js";
+import { MP_BONES_BODY, EXCLUDED_JOINTS } from "./utils/landmark.js";
 import { createBuffer } from "./utils/buffer.js";
 import { streamMultipleCsvsToBuffer } from "./provider/csv-provider.js";
 import {
