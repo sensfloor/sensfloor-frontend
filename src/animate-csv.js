@@ -10,6 +10,8 @@ import {
   renderer,
   floor,
 } from "./threejs-objects/setup-scene.js";
+import {renderPresetViews} from "./preview/present-preview.js";
+import {update_canvas} from "./config.js";
 
 let buffer = null;
 let skeletons = null;
@@ -36,6 +38,9 @@ export function animateCSV() {
 
   controls.update();
   renderer.render(scene, camera);
+  if (update_canvas){
+    renderPresetViews(scene)
+  }
 
   const raw_data_frames = buffer.get();
 

@@ -3,6 +3,7 @@ import {SKELETON_COLORS} from "./utils/colors.js";
 
 
 export const use_socket = false;
+export const update_canvas = true;
 
 export const CSV_SKELETON_CONFIGS = [
   { path: "../data/video_poses.csv", color: SKELETON_COLORS[2], rotationOffset: 45 },

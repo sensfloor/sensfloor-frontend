@@ -10,6 +10,8 @@ import { MP_BONES_BODY, EXCLUDED_JOINTS } from "./utils/consts.js";
 import { buffer } from "./provider/socket-provider.js";
 import { SKELETON_COLORS } from "./utils/colors.js";
 import { createSkeletonMP } from "./threejs-objects/skeleton.js";
+import {update_canvas} from "./config.js";
+import {renderPresetViews} from "./preview/present-preview.js";
 
 const skel = createSkeletonMP({
   excluded: EXCLUDED_JOINTS,
@@ -26,6 +28,9 @@ export function animateSocket() {
 
   controls.update();
   renderer.render(scene, camera);
+  if (update_canvas){
+    renderPresetViews(scene)
+  }
 
   const raw_data = buffer.get();
 
