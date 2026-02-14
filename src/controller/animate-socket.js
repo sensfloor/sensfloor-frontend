@@ -1,15 +1,15 @@
-import { backendFrameToThree } from "../utils/pose-map-converter.js";
+import { backendFrameToThree } from "../threejs/pose-map-converter.js";
 import {
   scene,
   camera,
   controls,
   renderer,
   floor,
-} from "../provider/scene-provider.js"
+} from "../threejs/scene-provider.js"
 import { MP_BONES_BODY, EXCLUDED_JOINTS } from "../utils/landmark.js";
 import { buffer } from "../provider/socket-provider.js";
 import { SKELETON_COLORS } from "../utils/colors.js";
-import { createSkeletonMP } from "../threejs-objects/skeleton.js";
+import { createSkeletonMP } from "../threejs/skeleton.js";
 import {update_canvas} from "../config.js";
 import {renderPresetViews} from "../provider/canvas-provider.js";
 

@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { POSE_LANDMARKS } from "./landmark.js";  // Map from mediapipe name to index, e.g. "LEFT_SHOULDER" -> 11
+import { POSE_LANDMARKS } from "../utils/landmark.js";  // Map from mediapipe name to index, e.g. "LEFT_SHOULDER" -> 11
 
 export function backendFrameToThree(poseEstimate, patchToWorld) {
   //  position_x, position_y (patch coordinates of hip)
