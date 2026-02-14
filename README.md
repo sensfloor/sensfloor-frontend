@@ -1,13 +1,13 @@
 # Sensfloor Pose Viewer
 This Frontend is build to visualize the outputs from here https://github.com/sensfloor/sensfloor-pipeline
 
-![Skeleton](./public/frontend_scene.png)
+![Skeleton](./public/frontend-scene.png)
 
 It can visualize any JSON Poses sent via websocket in the format of [this](./public/sample_data.js)
 
 Additionally, Multiple CSV Files can be streamed to compare poses
 
-![Skeleton](./public/frontend_comparison.png)
+![Skeleton](./public/frontend-comparison.png)
 
 More configurations can be found [here](./src/config.js)
 
