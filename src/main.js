@@ -1,5 +1,5 @@
-import { animateCSV, setupCSVAnimate } from "./animate-csv";
-import { animateSocket } from "./animate-socket";
+import { animateCSV, setupCSVAnimate } from "./controller/animate-csv.js";
+import { animateSocket } from "./controller/animate-socket.js";
 import "./styles.css";
 import { CSV_SKELETON_CONFIGS, use_socket } from "./config.js";
 
