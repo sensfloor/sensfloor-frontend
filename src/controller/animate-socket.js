@@ -41,7 +41,7 @@ export function animateSocket() {
     );
     skel.setPose(convertedFrame.poseWorld);
 
-    // Floor update...
+    // Floor update
     const activated_patch = raw_data.activations;
     floor.animatePatch(
       activated_patch.positions,

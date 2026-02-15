@@ -1,9 +1,6 @@
 let pauseButton = document.getElementById("pauseButton");
 export let isPaused = false;
-// add event for pause and resume buttun
 const handleKeyDown = () => {
-  // Check for Space bar
- // event.preventDefault(); // Prevent page scrolling
   isPaused = !isPaused;
   if (isPaused) {
     pauseButton.textContent = "Resume";

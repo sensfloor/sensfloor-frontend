@@ -25,7 +25,6 @@ export function initiatePreviews(scene, camera, controls) {
     return r;
   });
 
-  // click behavior
   presetCanvases.forEach((canvas, i) => {
     if (!canvas) return;
     canvas.addEventListener("click", () => {
