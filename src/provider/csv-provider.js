@@ -4,13 +4,11 @@ import { appSettings } from "../config.js";
 function parseCSVRow(rowObject) {
   const poseData = [];
 
-  // Iterate through all defined landmarks to find matching columns in the row
   for (const [jointName, index] of Object.entries(POSE_LANDMARKS)) {
     const xKey = `x${index}`;
     const yKey = `y${index}`;
     const zKey = `z${index}`;
 
-    // Only add the joint if the data exists in the row
     if (rowObject[xKey]) {
       poseData.push({
         joint: jointName,
@@ -22,16 +20,11 @@ function parseCSVRow(rowObject) {
   }
 
   return {
-    // These are placeholders as the CSV does not contain root position data
     position_x: 3,
     position_y: 2,
     pose: poseData,
   };
 }
-/**
- * Streams multiple CSV files in parallel.
- * Each 'tick' pushes an array containing one frame from EACH file.
- */
 export async function streamMultipleCsvsToBuffer(filePaths, fps, buffer) {
   // This will be an array of arrays: [ [frame0_fileA, frame0_fileB], [frame1_fileA, frame1_fileB], ... ]
   let synchronizedFrames = [];
@@ -61,16 +54,13 @@ export async function streamMultipleCsvsToBuffer(filePaths, fps, buffer) {
           rowObject[header] = val === "" ? null : Number(val);
         });
 
-        // Process the row through your existing parser
         const processedRow = parseCSVRow(rowObject);
 
-        // Initialize the frame array if it doesn't exist yet
         const frameIndex = rowObject["frame"];
         if (!synchronizedFrames[frameIndex]) {
           synchronizedFrames[frameIndex] = [];
         }
 
-        // Place this file's data into the correct "time slot"
         synchronizedFrames[frameIndex].push(processedRow);
       }
     }
@@ -81,7 +71,6 @@ export async function streamMultipleCsvsToBuffer(filePaths, fps, buffer) {
       `Sync complete. Streaming ${synchronizedFrames.length} multi-pose frames.`,
     );
 
-    // 2. Playback Loop
     let frameIndex = 0;
     const intervalMs = 1000 / fps;
 
@@ -95,7 +84,6 @@ export async function streamMultipleCsvsToBuffer(filePaths, fps, buffer) {
         return;
       }
 
-      // Pushes an ARRAY of poses to the buffer
       const poses_from_frame = synchronizedFrames[frameIndex];
       if (poses_from_frame && poses_from_frame.length >= filePaths.length) {
         buffer.push(synchronizedFrames[frameIndex]);

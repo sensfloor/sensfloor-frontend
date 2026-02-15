@@ -4,7 +4,6 @@ import { appSettings } from "../config.js";
 export function createSkeletonMP({ excluded, bones, color, rotationOffset }) {
   const group = new THREE.Group();
 
-  // Apply rotation
   group.rotation.y = rotationOffset * (Math.PI / 180);
 
   const jointGeom = new THREE.SphereGeometry(0.025, 16, 16);
@@ -37,7 +36,6 @@ export function createSkeletonMP({ excluded, bones, color, rotationOffset }) {
     return joints.get(mpIndex);
   }
 
-  // 1. DATA RECEIVER: Only calculates where things SHOULD go
   function setPose(poseMap) {
     const noseRaw = poseMap.get(0);
     const center = noseRaw ? noseRaw : new THREE.Vector3(0, 0, 0);
@@ -51,14 +49,11 @@ export function createSkeletonMP({ excluded, bones, color, rotationOffset }) {
     for (const [idx, p] of poseMap.entries()) {
       const joint = ensureJoint(idx);
       if (joint) {
-        // Calculate the target local position (Absolute - Center)
-        // We do NOT move the mesh here, just update the target
         joint.userData.target.copy(p).sub(center);
       }
     }
   }
 
-  // 2. VISUAL UPDATER: Moves things smoothly every frame
   function tick() {
     // Smoothly move the entire group (Nose)
     group.position.lerp(group.userData.target, appSettings.smoothingFactor);
@@ -68,8 +63,7 @@ export function createSkeletonMP({ excluded, bones, color, rotationOffset }) {
       joint.position.lerp(joint.userData.target, appSettings.smoothingFactor);
     });
 
-    // Rebuild bones based on the CURRENT SMOOTHED positions
-    // (We read from joint.position, not the raw data map)
+    // Rebuild bones
     const pts = [];
     for (const [a, b] of bones) {
       if (excluded.has(a) || excluded.has(b)) continue;
@@ -79,7 +73,6 @@ export function createSkeletonMP({ excluded, bones, color, rotationOffset }) {
 
       if (!jointA || !jointB) continue;
 
-      // Because joints are already local to the group, we just use their positions directly
       pts.push(
         jointA.position.x,
         jointA.position.y,
@@ -100,6 +93,5 @@ export function createSkeletonMP({ excluded, bones, color, rotationOffset }) {
     }
   }
 
-  // Return the new tick function alongside setPose
   return { group, setPose, tick };
 }

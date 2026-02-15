@@ -1,30 +1,27 @@
 import { createBuffer } from "../utils/buffer";
 
-const ws = new WebSocket("ws://127.0.0.1:8765");
+let ws = null;
 
-export const buffer = createBuffer();
+export let buffer = null;
 
-ws.onopen = () => {
-  console.log(" WebSocket connected");
-};
-ws.onerror = (e) => {
-  console.error(" WebSocket error", e);
-};
+export function setupSocketProvider() {
+  ws = new WebSocket("ws://127.0.0.1:8765");
 
-ws.onclose = () => {
-  console.warn(" WebSocket closed");
-};
+  buffer = createBuffer();
+  ws.onopen = () => {
+    console.log(" WebSocket connected");
+  };
+  ws.onerror = (e) => {
+    console.error(" WebSocket error", e);
+  };
 
-ws.onmessage = (e) => {
-  const raw = JSON.parse(e.data);
-  // console.debug("Full raw data:", JSON.stringify(raw, null, 2));
-  console.debug("Full raw data:", raw);
+  ws.onclose = () => {
+    console.warn(" WebSocket closed");
+  };
 
-  // if (raw.pose.length != 0) {
-  //   floor.setMarkerByPatch(raw.position_x, raw.position_y, true);
-  // }else{
-  //   floor.setMarkerByPatch(raw.position_x, raw.position_y, false);
-  // }
-
-  buffer.push(raw);
-};
+  ws.onmessage = (e) => {
+    const raw = JSON.parse(e.data);
+    console.debug("Full raw data:", raw);
+    buffer.push(raw);
+  };
+}

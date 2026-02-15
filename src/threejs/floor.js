@@ -111,7 +111,6 @@ export function createTriSensorFloor({ cols, rows, patchSize }) {
           new THREE.MeshBasicMaterial({
             color: 0x808080,
             transparent: true,
-            //wireframe: true,
             side: THREE.DoubleSide,
             opacity: 0.0,
           }),
@@ -141,27 +140,23 @@ export function createTriSensorFloor({ cols, rows, patchSize }) {
     }
   }
 
-  // continuous patch coordinate -> world (XZ)
   // Convert grid x,y index to world X coordinate, centered at the grid origin
   function patchWorld(x, y) {
-    const worldX = (x - cols / 2) * patchSize; // TODO: Change coordinate system to match backend coordinate system. Possibly backend needs to adapt coordinates?
+    const worldX = (x - cols / 2) * patchSize;
     const worldZ = -(y - rows / 2) * patchSize;
     return new THREE.Vector3(worldX, 0, worldZ);
   }
 
   let memory_index = [];
 
-
-
   function animatePatch(activated_patch, signals, visible_signal) {
-    //console.log("animatePatch called with", activated_patch);
     for (let i = 0; i < memory_index.length; i++) {
       const [x, y] = memory_index[i];
       for (let k = 0; k < 8; k++) {
         patchMarkers[x][y][k].material.opacity = 0.0;
       }
-    } 
-    if (activated_patch.length != signals.length) {
+    }
+    if (activated_patch.length !== signals.length) {
       return;
     }
     if (visible_signal){
@@ -174,7 +169,6 @@ export function createTriSensorFloor({ cols, rows, patchSize }) {
         const value = sig[k];
         const intensity = Math.max(value - 140, 0) / 110;
         const tri = patchMarkers[x][y][k];
-        // console.log(`intensity: ${intensity } `);
         tri.material.opacity = intensity * 100;
         }
       }

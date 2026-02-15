@@ -5,12 +5,10 @@ class SimpleGUI {
     this.container = document.getElementById(containerId);
   }
 
-  // Add a Slider
   addSlider(label, min, max, initialValue, step, onChange) {
     const wrapper = document.createElement("div");
     wrapper.className = "gui-control";
 
-    // Header with Label and Value display
     const header = document.createElement("div");
     header.className = "gui-label";
     header.innerHTML = `<span>${label}</span> <span class="gui-value">${initialValue}</span>`;
@@ -37,16 +35,13 @@ class SimpleGUI {
     const wrapper = document.createElement("div");
     wrapper.className = "gui-control gui-toggle-row";
 
-    // Label Text
     const span = document.createElement("span");
     span.className = "gui-label";
     span.innerText = label;
 
-    // Create Switch Container
     const switchLabel = document.createElement("label");
     switchLabel.className = "gui-switch";
 
-    // The hidden checkbox
     const input = document.createElement("input");
     input.type = "checkbox";
     input.checked = initialValue;
@@ -54,20 +49,16 @@ class SimpleGUI {
       onChange(e.target.checked);
     });
 
-    // The visual slider
     const slider = document.createElement("span");
     slider.className = "gui-slider";
 
-    // Assemble: switchLabel -> input + slider
     switchLabel.appendChild(input);
     switchLabel.appendChild(slider);
 
-    // Add to wrapper
     wrapper.appendChild(span);
     wrapper.appendChild(switchLabel);
     this.container.appendChild(wrapper);
   }
-  // Add a Button
   addButton(label, onClick) {
     const btn = document.createElement("button");
     btn.className = "gui-btn";
@@ -77,7 +68,6 @@ class SimpleGUI {
   }
 }
 
-// Initialize the GUI
 const gui = new SimpleGUI("gui-container");
 
 export function setupGui() {
@@ -92,5 +82,4 @@ export function setupGui() {
   gui.addToggle("show / hide signals", appSettings.signalVisible, (val) => {
     appSettings.signalVisible = val;
   });
-  
 }
