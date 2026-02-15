@@ -7,6 +7,7 @@ export const update_canvas = true;
 export const appSettings = {
   smoothingFactor: 0.2,
   isPaused: false,
+  // TODO: Add appsettings to not update floor (you have to add a button to the gui-controller, similar to isPaused)
 };
 
 export const CSV_SKELETON_CONFIGS = [

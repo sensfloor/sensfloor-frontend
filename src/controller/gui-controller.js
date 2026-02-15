@@ -88,4 +88,7 @@ export function setupGui() {
   gui.addButton("Pause / Play", () => {
     appSettings.isPaused = !appSettings.isPaused;
   });
+
+      // TODO: Add SLIDER HERE
+
 }

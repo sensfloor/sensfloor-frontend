@@ -42,6 +42,7 @@ export function animateSocket() {
     skel.setPose(convertedFrame.poseWorld);
 
     // Floor update
+    // TODO: Add appsettings to not update floor (you have to add a button to the gui-controller, similar to isPaused)
     const activated_patch = raw_data.activations;
     floor.animatePatch(
       activated_patch.positions,
