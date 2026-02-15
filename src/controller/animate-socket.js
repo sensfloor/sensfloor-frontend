@@ -5,14 +5,13 @@ import {
   controls,
   renderer,
   floor,
-} from "../threejs/scene-provider.js"
+} from "../threejs/scene-provider.js";
 import { MP_BONES_BODY, EXCLUDED_JOINTS } from "../utils/landmark.js";
 import { buffer } from "../provider/socket-provider.js";
 import { SKELETON_COLORS } from "../utils/colors.js";
 import { createSkeletonMP } from "../threejs/skeleton.js";
-import {update_canvas} from "../config.js";
-import {renderPresetViews} from "../provider/canvas-provider.js";
-import {isPaused} from "../provider/key-provider.js";
+import { appSettings, update_canvas } from "../config.js";
+import { renderPresetViews } from "../provider/canvas-provider.js";
 
 const skel = createSkeletonMP({
   excluded: EXCLUDED_JOINTS,
@@ -29,13 +28,13 @@ export function animateSocket() {
 
   controls.update();
   renderer.render(scene, camera);
-  if (update_canvas){
-    renderPresetViews(scene)
+  if (update_canvas) {
+    renderPresetViews(scene);
   }
 
   const raw_data = buffer.get();
 
-  if (raw_data && !isPaused) {
+  if (raw_data && !appSettings.isPaused) {
     // skeleton update
     const convertedFrame = backendFrameToThree(raw_data.pose_estimate, (x, y) =>
       floor.patchWorld(x, y),

@@ -1,5 +1,5 @@
 import { POSE_LANDMARKS } from "../utils/landmark.js";
-import { isPaused } from "./key-provider.js";
+import { appSettings } from "../config.js";
 
 function parseCSVRow(rowObject) {
   const poseData = [];
@@ -90,7 +90,7 @@ export async function streamMultipleCsvsToBuffer(filePaths, fps, buffer) {
         return;
       }
 
-      if (isPaused) {
+      if (appSettings.isPaused) {
         setTimeout(pushFrame, 500);
         return;
       }

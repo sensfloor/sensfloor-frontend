@@ -9,17 +9,10 @@
       body {
         margin: 0;
         overflow: hidden;
-        font-family: Arial, sans-serif;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f0f0f0; /* Just for visibility if canvas is transparent */
       }
-      #controlsHelp {
-        position: fixed;
-        bottom: 20px;
-        left: 20px;
-        background: rgba(255, 255, 255, 0.8);
-        padding: 10px;
-        border-radius: 5px;
-        z-index: 9999;
-      }
+
       #presetViewsOverlay {
         position: fixed;
         top: 20px;
@@ -31,19 +24,86 @@
       #presetViewsOverlay canvas {
         border: 1px solid #ccc;
         cursor: pointer;
+        background: white;
+        transition: transform 0.2s;
       }
-      button{
+      #presetViewsOverlay canvas:hover {
+        transform: scale(1.05);
+        border-color: #666;
+      }
+
+      #gui-container {
         position: fixed;
         top: 20px;
         left: 20px;
-        padding: 10px;
-        border-radius: 5px;
-        z-index: 9999;
+        width: 250px;
+        background: rgba(20, 20, 30, 0.85); /* Dark semi-transparent */
+        backdrop-filter: blur(5px);
+        padding: 15px;
+        border-radius: 8px;
+        color: white;
+        z-index: 10000;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        font-size: 13px;
+      }
+
+      .gui-control {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .gui-label {
+        font-weight: 600;
+        color: #ddd;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .gui-value {
+        color: #4facfe;
+      }
+
+      /* Slider Styling */
+      input[type="range"] {
+        width: 100%;
+        cursor: pointer;
+      }
+
+      /* Toggle Switch Styling */
+      .gui-toggle-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .gui-checkbox {
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+      }
+
+      /* Button Styling */
+      .gui-btn {
+        background: #4facfe;
+        color: white;
+        border: none;
+        padding: 8px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background 0.2s;
+      }
+      .gui-btn:hover {
+        background: #00f2fe;
       }
     </style>
   </head>
   <body>
     <div id="app"></div>
+
     <div id="presetViewsOverlay">
       <canvas
         id="preset-view-template"
@@ -53,10 +113,8 @@
         title="Preset 1"
       ></canvas>
     </div>
-    </div>
-        <div id="pauseControl">
-        <button id="pauseButton">Pause</button>
-    </div>
+
+    <div id="gui-container"></div>
 
     <script type="module" src="/src/main.js"></script>
   </body>

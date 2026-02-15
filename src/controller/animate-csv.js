@@ -10,8 +10,8 @@ import {
   renderer,
   floor,
 } from "../threejs/scene-provider.js";
-import {renderPresetViews} from "../provider/canvas-provider.js";
-import {update_canvas} from "../config.js";
+import { renderPresetViews } from "../provider/canvas-provider.js";
+import { update_canvas } from "../config.js";
 
 let buffer = null;
 let skeletons = null;
@@ -37,8 +37,8 @@ export function animateCSV() {
 
   controls.update();
   renderer.render(scene, camera);
-  if (update_canvas){
-    renderPresetViews(scene)
+  if (update_canvas) {
+    renderPresetViews(scene);
   }
 
   // smooth transition to new current target pose

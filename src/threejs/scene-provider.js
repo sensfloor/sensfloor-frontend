@@ -1,12 +1,20 @@
-import * as THREE from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { createTriSensorFloor } from "./floor.js";
-import { initiatePreviews, renderPresetViews }  from "../provider/canvas-provider.js";
+import {
+  initiatePreviews,
+  renderPresetViews,
+} from "../provider/canvas-provider.js";
 
 export const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x111111);
 
-export const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.01, 500);
+export const camera = new THREE.PerspectiveCamera(
+  60,
+  window.innerWidth / window.innerHeight,
+  0.01,
+  500,
+);
 camera.position.set(0, 3, 3);
 camera.lookAt(0, 0, 0);
 
@@ -20,16 +28,15 @@ controls.enableDamping = true;
 controls.dampingFactor = 0.05;
 controls.target.set(0, 0, 0);
 
-
 scene.add(new THREE.AmbientLight(0xffffff, 0.65));
 const dir = new THREE.DirectionalLight(0xffffff, 0.65);
 dir.position.set(3, 6, 0);
 scene.add(dir);
 
-window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
+window.addEventListener("resize", () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
 export const floor = createTriSensorFloor({ cols: 6, rows: 4, patchSize: 0.5 });

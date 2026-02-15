@@ -1,29 +1,36 @@
 import * as THREE from "three";
+import { appSettings } from "../config.js";
 
 export function createSkeletonMP({ excluded, bones, color, rotationOffset }) {
   const group = new THREE.Group();
-  
+
   // Apply rotation
   group.rotation.y = rotationOffset * (Math.PI / 180);
 
   const jointGeom = new THREE.SphereGeometry(0.025, 16, 16);
-  const jointMat = new THREE.MeshStandardMaterial({ color: color.jointColor, depthTest: false });
-  const joints = new Map(); 
+  const jointMat = new THREE.MeshStandardMaterial({
+    color: color.jointColor,
+    depthTest: false,
+  });
+  const joints = new Map();
 
   const boneGeom = new THREE.BufferGeometry();
-  const boneMat = new THREE.LineBasicMaterial({ color: color.boneColor, depthTest: false });
+  const boneMat = new THREE.LineBasicMaterial({
+    color: color.boneColor,
+    depthTest: false,
+  });
   const boneLine = new THREE.LineSegments(boneGeom, boneMat);
   group.add(boneLine);
 
   // Initialize a target for the group itself (the nose position)
-  group.userData.target = new THREE.Vector3(); 
+  group.userData.target = new THREE.Vector3();
 
   function ensureJoint(mpIndex) {
     if (excluded.has(mpIndex)) return null;
     if (!joints.has(mpIndex)) {
       const m = new THREE.Mesh(jointGeom, jointMat);
       // Initialize a target for this specific joint
-      m.userData.target = new THREE.Vector3(); 
+      m.userData.target = new THREE.Vector3();
       joints.set(mpIndex, m);
       group.add(m);
     }
@@ -37,7 +44,7 @@ export function createSkeletonMP({ excluded, bones, color, rotationOffset }) {
 
     // Update Group Target (Nose)
     if (noseRaw) {
-        group.userData.target.copy(noseRaw);
+      group.userData.target.copy(noseRaw);
     }
 
     // Update Joint Targets
@@ -53,38 +60,43 @@ export function createSkeletonMP({ excluded, bones, color, rotationOffset }) {
 
   // 2. VISUAL UPDATER: Moves things smoothly every frame
   function tick() {
-    const smoothingFactor = 0.2; // 0.1 = slow/smooth, 0.5 = fast/snappy
-
     // Smoothly move the entire group (Nose)
-    group.position.lerp(group.userData.target, smoothingFactor);
+    group.position.lerp(group.userData.target, appSettings.smoothingFactor);
 
     // Smoothly move all joints
     joints.forEach((joint) => {
-        joint.position.lerp(joint.userData.target, smoothingFactor);
+      joint.position.lerp(joint.userData.target, appSettings.smoothingFactor);
     });
 
     // Rebuild bones based on the CURRENT SMOOTHED positions
     // (We read from joint.position, not the raw data map)
-    const pts = []; 
+    const pts = [];
     for (const [a, b] of bones) {
       if (excluded.has(a) || excluded.has(b)) continue;
-      
+
       const jointA = joints.get(a);
       const jointB = joints.get(b);
-      
+
       if (!jointA || !jointB) continue;
 
       // Because joints are already local to the group, we just use their positions directly
       pts.push(
-        jointA.position.x, jointA.position.y, jointA.position.z,
-        jointB.position.x, jointB.position.y, jointB.position.z
+        jointA.position.x,
+        jointA.position.y,
+        jointA.position.z,
+        jointB.position.x,
+        jointB.position.y,
+        jointB.position.z,
       );
     }
-    
+
     if (pts.length > 0) {
-        boneGeom.setAttribute("position", new THREE.Float32BufferAttribute(pts, 3));
-        boneGeom.attributes.position.needsUpdate = true; // Important!
-        boneGeom.computeBoundingSphere();
+      boneGeom.setAttribute(
+        "position",
+        new THREE.Float32BufferAttribute(pts, 3),
+      );
+      boneGeom.attributes.position.needsUpdate = true; // Important!
+      boneGeom.computeBoundingSphere();
     }
   }
 
