@@ -89,6 +89,8 @@ export function setupGui() {
     appSettings.isPaused = !appSettings.isPaused;
   });
 
-      // TODO: Add SLIDER HERE
-
+  gui.addToggle("show / hide signals", appSettings.signalVisible, (val) => {
+    appSettings.signalVisible = val;
+  });
+  
 }

@@ -1,13 +1,14 @@
 import * as THREE from "three";
 import { SKELETON_COLORS } from "./utils/colors.js";
 
+
 export const use_socket = false;
 export const update_canvas = true;
 
 export const appSettings = {
   smoothingFactor: 0.2,
   isPaused: false,
-  // TODO: Add appsettings to not update floor (you have to add a button to the gui-controller, similar to isPaused)
+  signalVisible: true,
 };
 
 export const CSV_SKELETON_CONFIGS = [

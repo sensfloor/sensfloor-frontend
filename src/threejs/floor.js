@@ -151,18 +151,21 @@ export function createTriSensorFloor({ cols, rows, patchSize }) {
 
   let memory_index = [];
 
-  function animatePatch(activated_patch, signals) {
+
+
+  function animatePatch(activated_patch, signals, visible_signal) {
     //console.log("animatePatch called with", activated_patch);
     for (let i = 0; i < memory_index.length; i++) {
       const [x, y] = memory_index[i];
       for (let k = 0; k < 8; k++) {
         patchMarkers[x][y][k].material.opacity = 0.0;
       }
-    }
+    } 
     if (activated_patch.length != signals.length) {
       return;
     }
-    for (let i = 0; i < activated_patch.length; i++) {
+    if (visible_signal){
+      for (let i = 0; i < activated_patch.length; i++) {
       const x = activated_patch[i][0];
       const y = activated_patch[i][1];
       const sig = signals[i];
@@ -173,8 +176,10 @@ export function createTriSensorFloor({ cols, rows, patchSize }) {
         const tri = patchMarkers[x][y][k];
         // console.log(`intensity: ${intensity } `);
         tri.material.opacity = intensity * 100;
+        }
       }
     }
+    
     memory_index = activated_patch.map(([x, y]) => [x, y]);
   }
 
