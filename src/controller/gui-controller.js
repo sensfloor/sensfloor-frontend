@@ -82,17 +82,10 @@ const gui = new SimpleGUI("gui-container");
 
 export function setupGui() {
   gui.addSlider("Smoothing", 0, 1, appSettings.smoothingFactor, 0.01, (val) => {
-    console.log("Smoothing updated to:", val);
     appSettings.smoothingFactor = val;
   });
 
   gui.addButton("Pause / Play", () => {
     appSettings.isPaused = !appSettings.isPaused;
-    console.log("Paused:", appSettings.isPaused);
-  });
-
-  gui.addToggle("CSV / Socket", true, () => {
-    appSettings.isPaused = !appSettings.isPaused;
-    console.log("Paused:", appSettings.isPaused);
   });
 }
