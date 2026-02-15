@@ -32,6 +32,14 @@
         border: 1px solid #ccc;
         cursor: pointer;
       }
+      button{
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        padding: 10px;
+        border-radius: 5px;
+        z-index: 9999;
+      }
     </style>
   </head>
   <body>
@@ -44,6 +52,10 @@
         height="90"
         title="Preset 1"
       ></canvas>
+    </div>
+    </div>
+        <div id="pauseControl">
+        <button id="pauseButton">Pause</button>
     </div>
 
     <script type="module" src="/src/main.js"></script>

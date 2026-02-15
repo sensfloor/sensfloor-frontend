@@ -1,12 +1,21 @@
+let pauseButton = document.getElementById("pauseButton");
 export let isPaused = false;
-
-const handleKeyDown = (event) => {
+// add event for pause and resume buttun
+const handleKeyDown = () => {
   // Check for Space bar
-  if (event.code === "Space") {
-    event.preventDefault(); // Prevent page scrolling
-    isPaused = !isPaused;
-    console.log(isPaused ? "Stream Paused" : "Stream Resumed");
+ // event.preventDefault(); // Prevent page scrolling
+  isPaused = !isPaused;
+  if (isPaused) {
+    pauseButton.textContent = "Resume";
+  } else {
+    pauseButton.textContent = "Pause";
   }
+  console.log(isPaused ? "Stream Paused" : "Stream Resumed");
 };
 
-document.addEventListener("keydown", handleKeyDown);
+document.addEventListener("DOMContentLoaded", () => {
+    pauseButton = document.getElementById("pauseButton");
+    if (pauseButton) {
+        pauseButton.addEventListener("click", handleKeyDown);
+    }
+});
