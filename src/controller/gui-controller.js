@@ -82,4 +82,8 @@ export function setupGui() {
   gui.addToggle("show / hide signals", appSettings.signalVisible, (val) => {
     appSettings.signalVisible = val;
   });
+  
+  gui.addToggle("Toggle Render Pose in Canvas", appSettings.renderPoseInCanvas, (val) => {
+    appSettings.renderPoseInCanvas = val;
+  });
 }

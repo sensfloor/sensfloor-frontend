@@ -10,7 +10,7 @@ import { MP_BONES_BODY, EXCLUDED_JOINTS } from "../utils/landmark.js";
 import { buffer } from "../provider/socket-provider.js";
 import { SKELETON_COLORS } from "../utils/colors.js";
 import { createSkeletonMP } from "../threejs/skeleton.js";
-import { appSettings, update_canvas } from "../config.js";
+import { appSettings } from "../config.js";
 import { renderPresetViews } from "../provider/canvas-provider.js";
 
 const skel = createSkeletonMP({
@@ -28,7 +28,7 @@ export function animateSocket() {
 
   controls.update();
   renderer.render(scene, camera);
-  if (update_canvas) {
+  if (appSettings.renderPoseInCanvas) {
     renderPresetViews(scene);
   }
 
