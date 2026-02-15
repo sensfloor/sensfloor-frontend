@@ -33,29 +33,40 @@ class SimpleGUI {
     this.container.appendChild(wrapper);
   }
 
-  // Add a Toggle (Checkbox)
   addToggle(label, initialValue, onChange) {
     const wrapper = document.createElement("div");
     wrapper.className = "gui-control gui-toggle-row";
 
+    // Label Text
     const span = document.createElement("span");
     span.className = "gui-label";
     span.innerText = label;
 
+    // Create Switch Container
+    const switchLabel = document.createElement("label");
+    switchLabel.className = "gui-switch";
+
+    // The hidden checkbox
     const input = document.createElement("input");
     input.type = "checkbox";
-    input.className = "gui-checkbox";
     input.checked = initialValue;
-
     input.addEventListener("change", (e) => {
       onChange(e.target.checked);
     });
 
+    // The visual slider
+    const slider = document.createElement("span");
+    slider.className = "gui-slider";
+
+    // Assemble: switchLabel -> input + slider
+    switchLabel.appendChild(input);
+    switchLabel.appendChild(slider);
+
+    // Add to wrapper
     wrapper.appendChild(span);
-    wrapper.appendChild(input);
+    wrapper.appendChild(switchLabel);
     this.container.appendChild(wrapper);
   }
-
   // Add a Button
   addButton(label, onClick) {
     const btn = document.createElement("button");

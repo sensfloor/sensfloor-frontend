@@ -73,16 +73,56 @@
         cursor: pointer;
       }
 
-      /* Toggle Switch Styling */
-      .gui-toggle-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+      /* --- TOGGLE SWITCH STYLES --- */
+      /* The switch container */
+      .gui-switch {
+        position: relative;
+        display: inline-block;
+        width: 40px;
+        height: 22px;
       }
-      .gui-checkbox {
-        width: 16px;
-        height: 16px;
+
+      /* Hide default HTML checkbox */
+      .gui-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      /* The slider track */
+      .gui-slider {
+        position: absolute;
         cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #555; /* "Off" state color */
+        transition: 0.4s;
+        border-radius: 34px;
+      }
+
+      /* The sliding knob */
+      .gui-slider:before {
+        position: absolute;
+        content: "";
+        height: 16px;
+        width: 16px;
+        left: 4px;
+        bottom: 3px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+
+      /* "On" state color */
+      input:checked + .gui-slider {
+        background-color: #4facfe;
+      }
+
+      /* Move knob when checked */
+      input:checked + .gui-slider:before {
+        transform: translateX(16px);
       }
 
       /* Button Styling */
