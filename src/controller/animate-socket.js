@@ -12,6 +12,7 @@ import { SKELETON_COLORS } from "../utils/colors.js";
 import { createSkeletonMP } from "../threejs/skeleton.js";
 import {update_canvas} from "../config.js";
 import {renderPresetViews} from "../provider/canvas-provider.js";
+import {isPaused} from "../provider/key-provider.js";
 
 const skel = createSkeletonMP({
   excluded: EXCLUDED_JOINTS,
@@ -34,7 +35,7 @@ export function animateSocket() {
 
   const raw_data = buffer.get();
 
-  if (raw_data) {
+  if (raw_data && !isPaused) {
     // skeleton update
     const convertedFrame = backendFrameToThree(raw_data.pose_estimate, (x, y) =>
       floor.patchWorld(x, y),
