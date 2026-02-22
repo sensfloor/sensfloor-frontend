@@ -15,7 +15,7 @@ To find out exactly how to configure the app, go [here](./src/config.js)
 To be able to run this app you will need `npm` (recommended at least version 9.6.7)
 
 # Starting the app
-Run the following commands in the root repository
+Run the following commands in the Root repository
 
 `npm install`  
 `npm run dev`
