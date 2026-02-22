@@ -1,13 +1,14 @@
 import * as THREE from "three";
 import { SKELETON_COLORS } from "./utils/colors.js";
 
-export const use_socket = true;
+export const use_socket = false;
 
 export const appSettings = {
   smoothingFactor: 0.3,
   isPaused: false,
   signalVisible: true,
   renderPoseInCanvas: true,
+  landmarks: true,
 };
 
 export const CSV_SKELETON_CONFIGS = [

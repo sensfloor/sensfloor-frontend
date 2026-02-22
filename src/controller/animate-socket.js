@@ -24,7 +24,15 @@ scene.add(skel.group);
 export function animateSocket() {
   requestAnimationFrame(animateSocket);
 
-  if (skel && skel.tick) skel.tick();
+  
+  
+  if(appSettings.landmarks) {
+    skel.group.visible = true;
+    if (skel && skel.tick) skel.tick();
+
+  } else {
+    skel.group.visible = false;
+  }
 
   controls.update();
   renderer.render(scene, camera);

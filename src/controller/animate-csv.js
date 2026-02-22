@@ -40,11 +40,18 @@ export function animateCSV() {
   if (appSettings.renderPoseInCanvas) {
     renderPresetViews(scene);
   }
-
+ 
+  // adjust toggle skelton visibility here and tick if it's visible 
   // smooth transition to new current target pose
+
   skeletons.forEach((skel, index) => {
-    if (skel && skel.tick) {
-      skel.tick();
+    if(appSettings.landmarks) {
+      skel.group.visible = true;
+      if (skel && skel.tick) {
+        skel.tick();  
+      }
+    }else{
+      skel.group.visible = false;
     }
   });
 

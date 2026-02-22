@@ -86,4 +86,7 @@ export function setupGui() {
   gui.addToggle("Toggle Render Pose in Canvas", appSettings.renderPoseInCanvas, (val) => {
     appSettings.renderPoseInCanvas = val;
   });
+  gui.addToggle("show / hide landmarks", appSettings.landmarks, (val) => {
+    appSettings.landmarks = val;
+  });
 }
