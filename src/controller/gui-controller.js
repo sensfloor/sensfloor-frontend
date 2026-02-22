@@ -74,6 +74,9 @@ export function setupGui() {
   gui.addSlider("Smoothing", 0, 1, appSettings.smoothingFactor, 0.01, (val) => {
     appSettings.smoothingFactor = val;
   });
+  gui.addSlider("Signal Threshold", 128, 255, appSettings.threshold, 1, (val) => {
+    appSettings.threshold = val;
+  });
 
   gui.addButton("Pause / Play", () => {
     appSettings.isPaused = !appSettings.isPaused;

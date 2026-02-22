@@ -5,6 +5,7 @@ export const use_socket = false;
 
 export const appSettings = {
   smoothingFactor: 0.3,
+  threshold: 128,
   isPaused: false,
   signalVisible: true,
   renderPoseInCanvas: true,

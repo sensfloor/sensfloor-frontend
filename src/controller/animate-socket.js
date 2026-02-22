@@ -55,6 +55,7 @@ export function animateSocket() {
       activated_patch.positions,
       activated_patch.signals,
       appSettings.signalVisible,
+      appSettings.threshold,
       (x, y) => floor.patchWorld(x, y),
     );
   }

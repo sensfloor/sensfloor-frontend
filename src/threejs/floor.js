@@ -109,7 +109,7 @@ export function createTriSensorFloor({ cols, rows, patchSize }) {
         const m = new THREE.Mesh(
           g,
           new THREE.MeshBasicMaterial({
-            color: 0x808080,
+            color: 0xff0000 ,//   0x808080 
             transparent: true,
             side: THREE.DoubleSide,
             opacity: 0.0,
@@ -149,7 +149,7 @@ export function createTriSensorFloor({ cols, rows, patchSize }) {
 
   let memory_index = [];
 
-  function animatePatch(activated_patch, signals, visible_signal) {
+  function animatePatch(activated_patch, signals, visible_signal,threshold) {
     for (let i = 0; i < memory_index.length; i++) {
       const [x, y] = memory_index[i];
       for (let k = 0; k < 8; k++) {
@@ -167,9 +167,9 @@ export function createTriSensorFloor({ cols, rows, patchSize }) {
       memory_index.push(activated_patch[i]);
       for (let k = 0; k < 8; k++) {
         const value = sig[k];
-        const intensity = Math.max(value - 140, 0) / 110;
+        const intensity = Math.max(value - threshold, 0) / (255 - threshold);
         const tri = patchMarkers[x][y][k];
-        tri.material.opacity = intensity * 100;
+        tri.material.opacity = intensity *10;
         }
       }
     }
