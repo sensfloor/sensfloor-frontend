@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { MAX_SIGNAL_VALUE } from "../config.js";
 
 export function createTriSensorFloor({ cols, rows, patchSize }) {
   const group = new THREE.Group();
@@ -109,7 +110,7 @@ export function createTriSensorFloor({ cols, rows, patchSize }) {
         const m = new THREE.Mesh(
           g,
           new THREE.MeshBasicMaterial({
-            color: 0xff0000 ,//   0x808080 
+            color: 0xffaa00 ,
             transparent: true,
             side: THREE.DoubleSide,
             opacity: 0.0,
@@ -160,7 +161,6 @@ export function createTriSensorFloor({ cols, rows, patchSize }) {
       return;
     }
     if (visible_signal){
-      const max_signal = Math.max(...signals.flat()); // find the maximum signal value to normalize intensity of sginal visualization
       for (let i = 0; i < activated_patch.length; i++) {
       const x = activated_patch[i][0];
       const y = activated_patch[i][1];
@@ -168,9 +168,9 @@ export function createTriSensorFloor({ cols, rows, patchSize }) {
       memory_index.push(activated_patch[i]);
       for (let k = 0; k < 8; k++) {
         const value = sig[k];
-        const intensity = Math.max(value - threshold, 0) / (max_signal - threshold); // normalize and apply threshold
+        const intensity = Math.max(value - threshold, 0) / (MAX_SIGNAL_VALUE - threshold);
         const tri = patchMarkers[x][y][k];
-        tri.material.opacity = intensity ; 
+        tri.material.opacity = intensity * 2 ; 
         }
       }
     }

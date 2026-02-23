@@ -1,4 +1,4 @@
-import { appSettings } from "../config.js";
+import { appSettings, MAX_SIGNAL_VALUE } from "../config.js";
 
 class SimpleGUI {
   constructor(containerId) {
@@ -74,8 +74,8 @@ export function setupGui() {
   gui.addSlider("Smoothing", 0, 1, appSettings.smoothingFactor, 0.01, (val) => {
     appSettings.smoothingFactor = val;
   });
-  gui.addSlider("Signal Threshold", 128, 255, appSettings.threshold, 1, (val) => {
-    appSettings.threshold = val;
+  gui.addSlider("Signal Threshold", 128, MAX_SIGNAL_VALUE, appSettings.signalThreshold, 1, (val) => {
+    appSettings.signalThreshold = val;
   });
 
   gui.addButton("Pause / Play", () => {
@@ -89,7 +89,7 @@ export function setupGui() {
   gui.addToggle("Toggle Render Pose in Canvas", appSettings.renderPoseInCanvas, (val) => {
     appSettings.renderPoseInCanvas = val;
   });
-  gui.addToggle("show / hide landmarks", appSettings.landmarks, (val) => {
-    appSettings.landmarks = val;
+  gui.addToggle("show / hide landmarks", appSettings.showLandmarks, (val) => {
+    appSettings.showLandmarks = val;
   });
 }

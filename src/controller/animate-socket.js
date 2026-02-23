@@ -26,7 +26,7 @@ export function animateSocket() {
 
   
   
-  if(appSettings.landmarks) {
+  if(appSettings.showLandmarks) {
     skel.group.visible = true;
     if (skel && skel.tick) skel.tick();
 
@@ -55,7 +55,7 @@ export function animateSocket() {
       activated_patch.positions,
       activated_patch.signals,
       appSettings.signalVisible,
-      appSettings.threshold,
+      appSettings.signalThreshold,
       (x, y) => floor.patchWorld(x, y),
     );
   }

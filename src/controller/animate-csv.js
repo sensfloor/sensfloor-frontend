@@ -45,7 +45,7 @@ export function animateCSV() {
   // smooth transition to new current target pose
 
   skeletons.forEach((skel, index) => {
-    if(appSettings.landmarks) {
+    if(appSettings.showLandmarks) {
       skel.group.visible = true;
       if (skel && skel.tick) {
         skel.tick();  

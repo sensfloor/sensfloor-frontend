@@ -1,15 +1,15 @@
 import * as THREE from "three";
 import { SKELETON_COLORS } from "./utils/colors.js";
 
-export const use_socket = false;
+export const use_socket = true;
 
 export const appSettings = {
   smoothingFactor: 0.3,
-  threshold: 128,
+  signalThreshold: 128,
   isPaused: false,
   signalVisible: true,
   renderPoseInCanvas: true,
-  landmarks: true,
+  showLandmarks: true,
 };
 
 export const CSV_SKELETON_CONFIGS = [
@@ -37,3 +37,5 @@ export const presetViews = [
     lookAt: new THREE.Vector3(0, 0, 0),
   },
 ];
+
+export const MAX_SIGNAL_VALUE = 255;
