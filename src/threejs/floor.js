@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { MAX_SIGNAL_VALUE } from "../config.js";
+import { appSettings, MAX_SIGNAL_VALUE } from "../config.js";
 
 export function createTriSensorFloor({ cols, rows, patchSize }) {
   const group = new THREE.Group();
@@ -170,7 +170,7 @@ export function createTriSensorFloor({ cols, rows, patchSize }) {
         const value = sig[k];
         const intensity = Math.max(value - threshold, 0) / (MAX_SIGNAL_VALUE - threshold);
         const tri = patchMarkers[x][y][k];
-        tri.material.opacity = intensity * 2 ; 
+        tri.material.opacity = intensity * appSettings.signalIntensityMultiplier ; 
         }
       }
     }

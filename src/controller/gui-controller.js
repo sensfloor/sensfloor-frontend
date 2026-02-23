@@ -77,6 +77,9 @@ export function setupGui() {
   gui.addSlider("Signal Threshold", 128, MAX_SIGNAL_VALUE, appSettings.signalThreshold, 1, (val) => {
     appSettings.signalThreshold = val;
   });
+  gui.addSlider("Signal Intensity", 1, 10, appSettings.signalIntensityMultiplier, 1, (val) => {
+    appSettings.signalIntensityMultiplier = val;
+  });
 
   gui.addButton("Pause / Play", () => {
     appSettings.isPaused = !appSettings.isPaused;
@@ -85,7 +88,6 @@ export function setupGui() {
   gui.addToggle("show / hide signals", appSettings.signalVisible, (val) => {
     appSettings.signalVisible = val;
   });
-  
   gui.addToggle("Toggle Render Pose in Canvas", appSettings.renderPoseInCanvas, (val) => {
     appSettings.renderPoseInCanvas = val;
   });
