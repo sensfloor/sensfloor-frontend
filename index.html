@@ -146,10 +146,43 @@
         background: #00f2fe;
       }
 
+      #gui-container {
+        /* Kept only the flexbox layout properties here */
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 12px;
+      }
+
       details {
+        /* Moved all the positioning and theme styles here */
         position: fixed;
-        background: white;
-        padding: 5px;
+        top: 20px;
+        left: 20px;
+        width: 250px;
+        background: rgba(52, 52, 78, 0.85); /* Dark semi-transparent */
+        backdrop-filter: blur(5px);
+        padding: 15px;
+        border-radius: 8px;
+        color: white;
+        z-index: 10000;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        font-size: 13px;
+      }
+
+      summary {
+        font-weight: 600;
+        color: #ddd;
+        cursor: pointer;
+        outline: none;
+        user-select: none;
+      }
+
+      /* Adds a nice divider line under the summary when the menu is open */
+      details[open] summary {
+        margin-bottom: 12px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       }
     </style>
   </head>
@@ -167,9 +200,8 @@
       ></canvas>
     </div>
 
-    <details>
-        <summary>App Settings</summary>
-
+    <details open>
+      <summary>App Settings</summary>
       <div id="gui-container"></div>
     </details>
 
