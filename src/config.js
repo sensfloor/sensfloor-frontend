@@ -6,7 +6,7 @@ export const use_socket = true;
 export const appSettings = {
   smoothingFactor: 0.3,
   signalThreshold: 128,
-  signalIntensityMultiplier: 5,
+  signalIntensityMultiplier: 2,
   isPaused: false,
   signalVisible: true,
   renderPoseInCanvas: true,
