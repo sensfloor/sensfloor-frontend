@@ -35,12 +35,12 @@ export const presetViews = [
   */
   {
     id: "presetView3",
-    position: new THREE.Vector3(0, 3, 3), //main view
-    lookAt: new THREE.Vector3(0, 0, 0),
+    position: new THREE.Vector3(0, 1.9, 2.3), //main view
+    lookAt: new THREE.Vector3(0, 0.2, 0),
   },
   {
     id: "presetView4",
-    position: new THREE.Vector3(3.8, 1.7, 0), //main view
+    position: new THREE.Vector3(3.8, 1.7, 0),
     lookAt: new THREE.Vector3(0, 0, 0),
   },
 ];
