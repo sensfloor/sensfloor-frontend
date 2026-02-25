@@ -15,7 +15,7 @@ export const camera = new THREE.PerspectiveCamera(
   0.01,
   500,
 );
-camera.position.set(0, 1.9, 2.3); 
+camera.position.set(0, 1.7, 2.7); 
 export const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -24,7 +24,7 @@ document.body.appendChild(renderer.domElement);
 export const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.dampingFactor = 0.05;
-controls.target.set(0, 0, 0);
+controls.target.set(0, 0.7, 0);
 
 controls.update();
 

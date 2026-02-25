@@ -31,6 +31,7 @@ export function animateSocket() {
   } else {
     skel.group.visible = false;
   }
+  console.log(camera.position)
 
   controls.update();
   renderer.render(scene, camera);

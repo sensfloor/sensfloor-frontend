@@ -24,8 +24,8 @@ export const CSV_SKELETON_CONFIGS = [
 export const presetViews = [
   {
     id: "presetView1",
-    position: new THREE.Vector3(0.0001, 3, 0), // top down view
-    lookAt: new THREE.Vector3(0, 0,0 ),
+    position: new THREE.Vector3(0, 3, 0), // top down view
+    lookAt: new THREE.Vector3(0, 0, 0),
   },
  /*  {
     id: "presetView2",
@@ -35,8 +35,8 @@ export const presetViews = [
   */
   {
     id: "presetView3",
-    position: new THREE.Vector3(0, 1.9, 2.3), //main view
-    lookAt: new THREE.Vector3(0, 0, 0),
+    position: new THREE.Vector3(0, 1.7, 2.7), //main view
+    lookAt: new THREE.Vector3(0, 0.7, 0),
   },
 ];
 
