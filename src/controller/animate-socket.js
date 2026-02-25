@@ -24,7 +24,7 @@ scene.add(skel.group);
 export function animateSocket() {
   requestAnimationFrame(animateSocket);
 
-  
+  console.log(camera.position)  
   
   if(appSettings.showLandmarks) {
     skel.group.visible = true;

@@ -27,14 +27,20 @@ export const presetViews = [
     position: new THREE.Vector3(0, 5, 0), // top down view
     lookAt: new THREE.Vector3(0, 0, 0),
   },
-  {
+ /*  {
     id: "presetView2",
     position: new THREE.Vector3(0.7, 0.7, 1.7), // comparison view for two poses
     lookAt: new THREE.Vector3(0, 0.7, 0),
   },
+  */
   {
     id: "presetView3",
     position: new THREE.Vector3(0, 3, 3), //main view
+    lookAt: new THREE.Vector3(0, 0, 0),
+  },
+  {
+    id: "presetView4",
+    position: new THREE.Vector3(3.8, 1.7, 0), //main view
     lookAt: new THREE.Vector3(0, 0, 0),
   },
 ];
